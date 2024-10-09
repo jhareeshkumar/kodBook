@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="ISO-8859-1">
+			<title>KodBook</title>
+		</head>
+	<body>
+		<h1>KodBook</h1>
+		<h1>Create your new account</h1>
+		
+		<form action="/signUp" method="post">
+			<label>USERNAME : </label>
+				<input type="text" name = "userName">
+				<br>
+			<label>EMAIL : </label>
+				<input type="email" name = "email">
+				<br>
+			<label>DOB : </label>
+				<input type="date" name = "dob">
+				<br>
+			<label>GENDER : </label>
+				<input type="radio" name = "gender" value="M">
+				<label>Male</label>
+				<input type="radio" name = "gender" value="F">
+				<label>Female</label>
+				<input type="radio" name = "gender" value="O">
+				<label>Others</label>
+				<br>
+			<label>PASSWORD : </label>
+				<input type="password" name = "password">
+				<br>
+				<input type="submit" value="SIGNUP">
+				<br>
+			<a href="/">Already Have an account Login!</a>
+		</form>
+	</body>
+</html>
