@@ -3,9 +3,11 @@ package com.kodbook.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ch.qos.logback.core.model.Model;
+
 @Controller
 public class NavigationController {
-
+    
     @GetMapping("/")
     public String index() {
 	return "index";
@@ -20,10 +22,4 @@ public class NavigationController {
     public String openCreatePost() {
 	return "createPost";
     }
-
-    @GetMapping("/home")
-    public String home() {
-	return "home";
-    }
-
 }

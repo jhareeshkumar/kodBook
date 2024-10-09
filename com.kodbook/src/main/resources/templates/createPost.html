@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-	<html>
-		<head>
+<html xmlns:th="http://www.thymeleaf.org">		<head>
 			<meta charset="ISO-8859-1">
 			<title>KodBook Create Post</title>
 		</head>
 	<body>
 		<h1>KodBook</h1>
+		<!-- Navigation Bar -->
+		<nav>
+			<a href="/home">News Feed</a>
+			<a href="/openCreatePost">Create Post</a>
+			<a href="#">My Profile</a>
+		</nav>
 		<h1>#Create Post Here!</h1>
 		
 		<form action="/createPost" method="post" enctype="multipart/form-data">
