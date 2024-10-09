@@ -15,4 +15,6 @@ public interface PostService {
     void incrementLike(Long id);
     
     void updatePost(Post post);
+
+    void addComment(Long id, String comment);
 }

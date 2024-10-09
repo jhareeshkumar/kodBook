@@ -30,13 +30,26 @@
             	<strong>Caption:</strong>
             	<span th:text="${post.caption}"></span>
             </p>
-             <!-- Display like count -->
+            <!-- Display like count -->
             <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
             <form action="/likePost" method="post">
             	<input type="hidden" name="id" th:value="${post.id}">
             	<input type="submit" value="LIKE POST"> 
             </form>
-            
+            <form action="/addComment" method="post">
+            	<input type="hidden" name="id" th:value="${post.id}">
+            	<textarea name="comment" placeholder="Add a Comment.."></textarea>
+            	<input type="submit" value="COMMENT"> 
+            </form>
+            <!-- Display existing comments -->
+            <div>
+                <h3>Comments:</h3>
+                <ul>
+                    <li th:each="comment : ${post.comments}">
+                        <span th:text="${comment}"></span>
+                    </li>
+                </ul>
+            </div>
         	</div>
     	</div>		
 	</body>

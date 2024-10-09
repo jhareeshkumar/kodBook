@@ -36,14 +36,22 @@ public class PostController {
 	model.addAttribute("posts", posts);
 	return "home";
     }
-    
+
     @PostMapping("/likePost")
-    public String postMethodName(@RequestParam Long id,Model model) {
-	//TODO: process POST request
+    public String likePost(@RequestParam Long id, Model model) {
+	// TODO: process POST request
 	Post post = postService.getPost(id);
 	postService.incrementLike(id);
 	postService.updatePost(post);
-	model.addAttribute("posts",postService.getAllPosts());
+	model.addAttribute("posts", postService.getAllPosts());
+	return "redirect:/home";
+    }
+
+    @PostMapping("/addComment")
+    public String addComment(@RequestParam Long id, String comment, Model model) {
+	// TODO: process POST request
+	postService.addComment(id, comment);
+	model.addAttribute("posts", postService.getAllPosts());
 	return "redirect:/home";
     }
 

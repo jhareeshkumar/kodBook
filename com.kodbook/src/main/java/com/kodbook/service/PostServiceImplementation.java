@@ -1,5 +1,6 @@
 package com.kodbook.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +48,23 @@ public class PostServiceImplementation implements PostService {
     public void updatePost(Post post) {
 	// TODO Auto-generated method stub
 	postRepository.save(post);
+    }
+
+    @Override
+    public void addComment(Long id, String comment) {
+	// TODO Auto-generated method stub
+	Optional<Post> optional = postRepository.findById(id);
+	if (optional.isPresent()) {
+	    Post post = optional.get();
+	    List<String> comments = post.getComments();
+	    if (comments==null) {
+		comments = new ArrayList<>();
+	    }
+	    comments.add(comment);
+	    post.setComments(comments);
+	    postRepository.save(post);
+	    System.out.println("Added comment successfully");
+	}
+	
     }
 }
