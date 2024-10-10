@@ -4,16 +4,14 @@
 			<title>KodBook Edit Profile</title>
 		</head>
 	<body>
-		<h1>KodBook</h1>
-		<h2>Welcome
-		<span th:text="${session.userName}"></span>
-		</h2>
 		<!-- Navigation Bar -->
 		<nav>
-			<a href="/home">News Feed</a>
+			<span th:text="${session.userName}"></span>
+			<a href="/home">Home</a>
 			<a href="/openCreatePost">Create Post</a>
 			<a href="/openMyProfile">My Profile</a>
 			<a href="/openEditProfile">Edit Profile</a>
+			<a href="#">Logout</a>
 			
 		</nav>
 		<h1>#Update Profile Here!</h1>
