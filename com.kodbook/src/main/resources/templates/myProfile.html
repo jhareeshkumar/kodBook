@@ -3,6 +3,7 @@
 		<head>
 			<meta charset="ISO-8859-1">
 			<title>KodBook My Profile</title>
+			<link rel="stylesheet" th:href="@{/css/style.css}">
 		</head>
 	<body>
 		<!-- Navigation Bar -->
@@ -31,6 +32,5 @@
         	<li><a th:href="${user.linkedIn}" th:text="${user.linkedIn}"></a></li>
         	<li><a th:href="${user.gitHub}" th:text="${user.gitHub}"></a></li>
         </ul>
-		
 	</body>
 </html>

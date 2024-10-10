@@ -3,6 +3,7 @@
 		<head>
 			<meta charset="ISO-8859-1">
 			<title>KodBook Home</title>
+			<link rel="stylesheet" th:href="@{/css/style.css}">
 		</head>
 	<body>
 		<!-- Navigation Bar -->
@@ -14,45 +15,52 @@
 			<a href="/openEditProfile">Edit Profile</a>
 			<a href="#">Logout</a>
 		</nav>
-		
-		
 		<div class="post-details">
-        <h2>Post Details</h2>
         <!-- Loop through all posts -->
         <div th:each="post : ${posts}">
             <!-- Display post photo (if available) -->
-            <p>
-            	<strong>Photo:</strong>
-            </p>
-            <img th:if="${post.photoBase64}" 
-                 th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" 
-                 alt="Post Photo" />
-             <!-- Display post caption -->
-            <p>
-            	<strong>Caption:</strong>
-            	<span th:text="${post.caption}"></span>
-            </p>
-            <!-- Display like count -->
-            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
-            <form action="/likePost" method="post">
-            	<input type="hidden" name="id" th:value="${post.id}">
-            	<input type="submit" value="LIKE POST"> 
-            </form>
-            <form action="/addComment" method="post">
-            	<input type="hidden" name="id" th:value="${post.id}">
-            	<textarea name="comment" placeholder="Add a Comment.."></textarea>
-            	<input type="submit" value="COMMENT"> 
-            </form>
-            <!-- Display existing comments -->
-            <div>
-                <h3>Comments:</h3>
-                <ul>
-                    <li th:each="comment : ${post.comments}">
-                        <span th:text="${comment}"></span>
-                    </li>
-                </ul>
-            </div>
+          <ul>
+          	<li>
+          		<b><span th:text="${post.user.userName}"></span></b>
+	            <img th:if="${post.photoBase64}" 
+	                 th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" 
+	                 alt="Post Photo"  />
+              </li>
+              <li>
+             		<p>
+            		<strong>Caption:</strong>
+            		<span th:text="${post.caption}"></span>
+            		</p>
+            	<li>
+             	<li>
+		            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
+		            <form action="/likePost" method="post">
+		            	<input type="hidden" name="id" th:value="${post.id}">
+		            	<input type="submit" value="LIKE POST"> 
+		            </form>
+            	</li>
+            	<li>
+		            <form action="/addComment" method="post">
+		            	<input type="hidden" name="id" th:value="${post.id}">
+		            	<textarea name="comment" placeholder="Add a Comment.."></textarea>
+		            	<input type="submit" value="COMMENT"> 
+		            </form>
+             	</li>
+             	<li>
+		            <div>
+		                <h3>Comments:</h3>
+		                <ul>
+		                    <li th:each="comment : ${post.comments}">
+		                        <span th:text="${comment}"></span>
+		                    </li>
+		                </ul>
+		            </div>
+             	</li>
+            </ul>
+            <br>
+            
         	</div>
     	</div>		
+		
 	</body>
 </html>

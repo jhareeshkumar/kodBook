@@ -1,6 +1,7 @@
 package com.kodbook.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,18 @@ public class PostController {
 	post.setPhoto(photo.getBytes());
 	
 	String userName = (String) session.getAttribute("userName");
-	System.out.println(userName);
 	User user = userService.getUser(userName);
-	
+	//mapping user to post
 	post.setUser(user);
 	postService.createPost(post);
+	//update user with posts to map posts
+	List<Post> posts = user.getPosts();
+	if (posts==null) {
+	    posts = new ArrayList<Post>();
+	}
+	posts.add(post);//add post to list
+	user.setPosts(posts);//set posts to user
+	userService.updateUser(user);//update
 	return "redirect:/home";
     }
 
