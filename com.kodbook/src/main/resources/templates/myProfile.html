@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+		<head>
+			<meta charset="ISO-8859-1">
+			<title>KodBook My Profile</title>
+		</head>
+	<body>
+		<h1>KodBook!</h1>
+		<h2>Welcome
+		<span th:text="${session.userName}"></span>
+		</h2>
+		<!-- Navigation Bar -->
+		<nav>
+			<a href="/home">News Feed</a>
+			<a href="/openCreatePost">Create Post</a>
+			<a href="/openMyProfile">My Profile</a>
+			<a href="/openEditProfile">Edit Profile</a>
+		</nav>
+		
+		
+        <h2>Profile Details</h2>	
+        <ul>
+        	<li><img th:if="${user.photoBase64}" 
+                 th:src="'data:image/jpeg;base64,' + ${user.photoBase64}" 
+                 alt="Profile Pic" /></li>
+        	<li th:text="${user.userName}"></li>
+        	<li th:text="${user.email}"></li>
+        	<li th:text="${user.dob}"></li>
+        	<li th:text="${user.gender}"></li>
+        	<li th:text="${user.city}"></li>
+        	<li th:text="${user.bio}"></li>
+        	<li th:text="${user.college}"></li>
+        	<li><a th:href="${user.linkedIn}" th:text="${user.linkedIn}"></a></li>
+        	<li><a th:href="${user.gitHub}" th:text="${user.gitHub}"></a></li>
+        </ul>
+		
+	</body>
+</html>

@@ -8,9 +8,9 @@ import com.kodbook.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUserName(String userName);
+    User findByUserName(String userName);
 
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 
     Optional<User> findByUserNameAndPassword(String userName, String password);
 

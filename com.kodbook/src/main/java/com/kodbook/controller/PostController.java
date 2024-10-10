@@ -13,19 +13,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kodbook.entity.Post;
+import com.kodbook.entity.User;
+import com.kodbook.repository.UserRepository;
 import com.kodbook.service.PostService;
+import com.kodbook.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PostController {
     @Autowired
     private PostService postService;
+    
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/createPost")
-    public String createPost(@RequestParam String caption, @RequestParam MultipartFile photo) throws IOException {
+    public String createPost(@RequestParam String caption, @RequestParam MultipartFile photo,HttpSession session) throws IOException {
 	// TODO: process POST request
 	Post post = new Post();
 	post.setCaption(caption);
 	post.setPhoto(photo.getBytes());
+	
+	String userName = (String) session.getAttribute("userName");
+	System.out.println(userName);
+	User user = userService.getUser(userName);
+	
+	post.setUser(user);
 	postService.createPost(post);
 	return "redirect:/home";
     }

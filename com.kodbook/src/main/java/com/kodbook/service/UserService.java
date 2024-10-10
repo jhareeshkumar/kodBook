@@ -4,10 +4,14 @@ import com.kodbook.entity.User;
 
 public interface UserService {
 
-    boolean userExists(String userName, String email);
-
     void addUser(User user);
 
+    boolean userExists(String userName, String email);
+
     boolean validateUser(String userName, String password);
+
+    User getUser(String userName);
+
+    void updateUser(User user);
 
 }

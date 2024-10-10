@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Post {
@@ -21,92 +22,90 @@ public class Post {
     private String caption;
     private int likes;
     private List<String> comments;
-    
+
+    @ManyToOne
+    private User user;
+
     @Lob
-    @Basic(fetch=FetchType.LAZY)
-    @Column(columnDefinition = "LONGBLOB" )
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] photo;
 
-    //method to convert byte[] to String
+    // method to convert byte[] to String
     public String getPhotoBase64() {
-	if (photo==null) {
+	if (photo == null) {
 	    return null;
 	}
 	return Base64.getEncoder().encodeToString(photo);
     }
-
 
     public Post() {
 	super();
 	// TODO Auto-generated constructor stub
     }
 
-
-    public Post(Long id, String caption, int likes, List<String> comments, byte[] photo) {
+    public Post(Long id, String caption, int likes, List<String> comments, User user, byte[] photo) {
 	super();
 	this.id = id;
 	this.caption = caption;
 	this.likes = likes;
 	this.comments = comments;
+	this.user = user;
 	this.photo = photo;
     }
 
-
     public Long getId() {
-        return id;
+	return id;
     }
-
 
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
-
 
     public String getCaption() {
-        return caption;
+	return caption;
     }
-
 
     public void setCaption(String caption) {
-        this.caption = caption;
+	this.caption = caption;
     }
-
 
     public int getLikes() {
-        return likes;
+	return likes;
     }
-
 
     public void setLikes(int likes) {
-        this.likes = likes;
+	this.likes = likes;
     }
-
 
     public List<String> getComments() {
-        return comments;
+	return comments;
     }
-
 
     public void setComments(List<String> comments) {
-        this.comments = comments;
+	this.comments = comments;
     }
 
+    public User getUser() {
+	return user;
+    }
+
+    public void setUser(User user) {
+	this.user = user;
+    }
 
     public byte[] getPhoto() {
-        return photo;
+	return photo;
     }
-
 
     public void setPhoto(byte[] photo) {
-        this.photo = photo;
+	this.photo = photo;
     }
-
 
     @Override
     public String toString() {
-	return "Post [id=" + id + ", caption=" + caption + ", likes=" + likes + ", comments=" + comments + ", photo="
-		+ Arrays.toString(photo) + "]";
+	return "Post [id=" + id + ", caption=" + caption + ", likes=" + likes + ", comments=" + comments + ", user="
+		+ user + ", photo=" + Arrays.toString(photo) + "]";
     }
-    
-    
+
 }

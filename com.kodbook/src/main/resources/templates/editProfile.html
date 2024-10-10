@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">		<head>
+			<meta charset="ISO-8859-1">
+			<title>KodBook Edit Profile</title>
+		</head>
+	<body>
+		<h1>KodBook</h1>
+		<h2>Welcome
+		<span th:text="${session.userName}"></span>
+		</h2>
+		<!-- Navigation Bar -->
+		<nav>
+			<a href="/home">News Feed</a>
+			<a href="/openCreatePost">Create Post</a>
+			<a href="/openMyProfile">My Profile</a>
+			<a href="/openEditProfile">Edit Profile</a>
+			
+		</nav>
+		<h1>#Update Profile Here!</h1>
+		
+		<form action="/updateProfile" method="post" enctype="multipart/form-data">
+			<label>PHOTO : </label>
+				<input type="file" name = photo accept="image/*">
+				<br>
+			<label>DOB : </label>
+				<input type="date" name = "dob">
+				<br>
+			<label>GENDER : </label>
+				<input type="radio" name = "gender" value="M">
+				<label>Male</label>
+				<input type="radio" name = "gender" value="F">
+				<label>Female</label>
+				<input type="radio" name = "gender" value="O">
+				<label>Others</label>
+				<br>
+			<label>CITY : </label>
+				<input type="text" name = "city">
+				<br>
+			<label>BIO : </label>
+				<input type="text" name = "bio">
+				<br>
+			<label>COLLEGE : </label>
+				<input type="text" name = "college">
+				<br>
+			<label>LINKEDIN : </label>
+				<input type="text" name = "linkedIn">
+				<br>
+			<label>GITHUB : </label>
+				<input type="text" name = "gitHub">
+				<br>
+				<input type="submit" value="UPDATE PROFILE">
+				<br>
+		</form>
+	</body>
+</html>
