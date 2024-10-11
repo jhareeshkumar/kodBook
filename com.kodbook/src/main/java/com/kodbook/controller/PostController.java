@@ -28,7 +28,18 @@ public class PostController {
     
     @Autowired
     private UserService userService;
-
+    
+    @GetMapping("/openCreatePost")
+    public String openCreatePost(HttpSession session) {
+	
+	String userName = (String) session.getAttribute("userName");
+	if (userName == null) {
+	    return "redirect:/";
+	}
+	
+	return "createPost";
+    }
+    
     @PostMapping("/createPost")
     public String createPost(@RequestParam String caption, @RequestParam MultipartFile photo,HttpSession session) throws IOException {
 	// TODO: process POST request
@@ -53,7 +64,13 @@ public class PostController {
     }
 
     @GetMapping("/getAllPosts")
-    public String getAllPosts(Model model) {
+    public String getAllPosts(Model model,HttpSession session) {
+	
+	String userName = (String) session.getAttribute("userName");
+	if (userName == null) {
+	    return "redirect:/";
+	}
+	
 	List<Post> posts = postService.getAllPosts();
 	model.addAttribute("posts", posts);
 	return "home";

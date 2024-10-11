@@ -13,9 +13,16 @@
             color: white;
             padding: 15px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-
+	
+		nav h1 {
+		    font-size: 24px;
+		    margin: 0;
+		    font-weight: bold;
+		}
+		
         nav span {
             font-size: 18px;
             margin-right: auto; /* Push the links to the right */
@@ -103,13 +110,126 @@
 		    color: #1877F2; /* Facebook blue color */
 		}
 		
+		
+		/* Form styling */
 		form {
-		    margin: 10px 0;
+		    max-width: 400px;
+		    margin: 50px auto;
+		    background-color: white;
+		    padding: 20px;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+		}
+		
+		form label {
+		    font-size: 14px;
+		    font-weight: bold;
+		    display: block;
+		    margin-bottom: 8px;
+		    color: #333;
+		}
+		
+		form input[type="text"],
+		form input[type="email"],
+		form input[type="password"] {
+		    width: 100%;
+		    padding: 10px;
+		    margin-bottom: 15px;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    font-size: 14px;
+		}
+		
+		form input[type="submit"] {
+		    width: 100%;
+		    padding: 10px;
+		    background-color: #1877f2;
+		    color: white;
+		    border: none;
+		    border-radius: 4px;
+		    font-size: 16px;
+		    cursor: pointer;
+		}
+		
+		form input[type="submit"]:hover {
+		    background-color: #145dbf;
+		}
+		
+		/* Links for signup and forgot password */
+		form a {
+		    color: #1877f2;
+		    text-decoration: none;
+		    font-size: 14px;
+		    display: inline-block;
+		    margin-top: 10px;
+		}
+		
+		form a:hover {
+		    text-decoration: underline;
+		}
+		/* Styling for the signup form */
+		h1 {
+		    text-align: center;
+		    color: #333;
+		    margin-top: 20px;
+		}
+		
+		/* Form radio buttons */
+		form input[type="radio"] {
+		    margin-right: 5px;
+		}
+		
+		form label {
+		    margin-right: 10px;
+		}
+		
+		/* Adjust alignment for the gender radio buttons */
+		form input[type="radio"] + label {
+		    display: inline-block;
+		    margin-right: 20px;
+		}
+		
+		form input[type="date"] {
+		    padding: 8px;
+		    width: 100%;
+		    border-radius: 4px;
+		    border: 1px solid #ccc;
+		    margin-bottom: 15px;
+		    font-size: 14px;
 		}
         
+		form input[type="text"], 
+		form input[type="email"], 
+		form input[type="password"], 
+		form input[type="date"] {
+		    width: 95%; /* Adjust this percentage to control the width */
+		    margin: 0 auto; /* Center the input fields */
+		    display: block; /* Ensure the inputs are block-level for proper centering */
+		}
         
+		form textarea[name="caption"] {
+		    width: 80%; /* Adjust width as needed */
+		    padding: 10px;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		    font-family: Arial, sans-serif;
+		    font-size: 14px;
+		    resize: vertical; /* Allows the user to resize vertically only */
+		    margin-bottom: 15px;
+		}
+		
+		form input[type="file"] {
+		    display: block;
+		    margin-top: 10px;
+		    margin-bottom: 15px;
+		    font-family: Arial, sans-serif;
+		}       
         /* Responsive design */
         @media (max-width: 768px) {
+        	
+			form {
+		        width: 90%;
+		    }
             ul {
                 padding: 10px;
             }

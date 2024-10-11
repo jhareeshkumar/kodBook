@@ -18,7 +18,6 @@ import com.kodbook.service.PostService;
 import com.kodbook.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
@@ -44,9 +43,10 @@ public class UserController {
     public String login(@RequestParam String userName, @RequestParam String password, Model model,
 	    HttpSession session) {
 	// TODO: process POST request
+	System.out.println("testing"+userName+password);
 	boolean loginStatus = userService.validateUser(userName, password);
 	if (loginStatus) {
-	    System.out.println("Login SuccessFull");
+	    System.out.println("Login SuccessFull"+""+loginStatus);
 
 	    session.setAttribute("userName", userName);
 	    model.addAttribute("session", session);
@@ -60,7 +60,13 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String getHome(Model model) {
+    public String getHome(Model model, HttpSession session) {
+
+	String userName = (String) session.getAttribute("userName");
+	if (userName == null) {
+	    return "redirect:/";
+	}
+
 	model.addAttribute("posts", postService.getAllPosts());
 	return "home";
     }
@@ -93,7 +99,7 @@ public class UserController {
 	String userName = (String) session.getAttribute("userName");
 
 	if (userName == null) {
-	    return "redirect:/index";
+	    return "redirect:/";
 	}
 	System.out.println(userName);
 	User user = userService.getUser(userName);
@@ -112,6 +118,28 @@ public class UserController {
 	model.addAttribute("posts", posts);
 
 	return "myProfile";
+    }
+
+    @GetMapping("/openEditProfile")
+    public String openEditProfile(HttpSession session) {
+
+	String userName = (String) session.getAttribute("userName");
+	if (userName == null) {
+	    return "redirect:/";
+	}
+	return "editProfile";
+    }
+
+    @GetMapping(value = "/logout")
+    public String logout(HttpSession session) {
+	String userName = (String) session.getAttribute("userName");
+	if (userName == null) {
+	    return "redirect:/";
+	}
+	// TODO: process POST request
+	session.invalidate();
+	System.out.println("logout success");
+	return "redirect:/";
     }
 
 }

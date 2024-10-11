@@ -3,17 +3,20 @@
 		<head>
 			<meta charset="ISO-8859-1">
 			<title>KodBook index</title>
+			<link rel="stylesheet" th:href="@{/css/style.css}">
 		</head>
 	<body>
-		<h1>KodBook</h1>
-		<h1>#1 social media app!</h1>
+		
+		<nav>
+			<h1>KodBook</h1>
+		</nav>
 		
 		<form action="/login" method="post">
 			<label>USERNAME : </label>
-				<input type="text" name = "userName">
+				<input type="text" name = "userName" required="required">
 				<br>
 			<label>PASSWORD : </label>
-				<input type="password" name = "password">
+				<input type="password" name = "password" required="required">
 				<br>
 				<input type="submit" value="LOGIN">
 				<br>

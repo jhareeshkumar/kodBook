@@ -15,14 +15,4 @@ public class NavigationController {
     public String openSignUp() {
 	return "signUp";
     }
-
-    @GetMapping("/openCreatePost")
-    public String openCreatePost() {
-	return "createPost";
-    }
-    @GetMapping("/openEditProfile")
-    public String openEditProfile() {
-	return "editProfile";
-    }
-    
 }

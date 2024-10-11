@@ -3,20 +3,22 @@
 		<head>
 			<meta charset="ISO-8859-1">
 			<title>KodBook</title>
+			<link rel="stylesheet" th:href="@{/css/style.css}">
 		</head>
 	<body>
-		<h1>KodBook</h1>
+		<nav><h1>KodBook</h1></nav>
+		
 		<h1>Create your new account</h1>
 		
 		<form action="/signUp" method="post">
 			<label>USERNAME : </label>
-				<input type="text" name = "userName">
+				<input type="text" name = "userName" required="required">
 				<br>
 			<label>EMAIL : </label>
-				<input type="email" name = "email">
+				<input type="email" name = "email" required="required">
 				<br>
 			<label>DOB : </label>
-				<input type="date" name = "dob">
+				<input type="date" name = "dob" required="required">
 				<br>
 			<label>GENDER : </label>
 				<input type="radio" name = "gender" value="M">
@@ -27,7 +29,7 @@
 				<label>Others</label>
 				<br>
 			<label>PASSWORD : </label>
-				<input type="password" name = "password">
+				<input type="password" name = "password" required="required">
 				<br>
 				<input type="submit" value="SIGNUP">
 				<br>
