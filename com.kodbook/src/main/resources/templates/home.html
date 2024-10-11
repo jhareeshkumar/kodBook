@@ -15,16 +15,23 @@
 			<a href="/openEditProfile">Edit Profile</a>
 			<a href="#">Logout</a>
 		</nav>
-		<div class="post-details">
+		<div>
         <!-- Loop through all posts -->
         <div th:each="post : ${posts}">
             <!-- Display post photo (if available) -->
           <ul>
           	<li>
-          		<b><span th:text="${post.user.userName}"></span></b>
+          		<b>
+          			<span><img th:if="${post.user.photoBase64}" 
+	                 th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}" 
+	                 alt="Profile Photo"  />
+	                </span>
+          			<span th:text="${post.user.userName}"></span>
+          		</b>
+          		
 	            <img th:if="${post.photoBase64}" 
 	                 th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" 
-	                 alt="Post Photo"  />
+	                 alt="Post Photo"  class="post-details"/>
               </li>
               <li>
              		<p>

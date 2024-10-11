@@ -75,15 +75,6 @@
         ul li a:hover {
             text-decoration: underline;
         }
-		.post-details img{
-				 /* Profile picture styling */
-				border-radius:0% !important;
-	            width: 350px !important;
-	            height: 350px !important;
-	            display: block;
-	            margin: 0 auto;
-
-		}
         /* Responsive design */
         @media (max-width: 768px) {
             ul {

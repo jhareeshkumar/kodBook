@@ -92,6 +92,8 @@ public class UserController {
 	String userName = (String) session.getAttribute("userName");
 	User user = userService.getUser(userName);
 	model.addAttribute("user", user);
+	List<Post> posts = user.getPosts();
+	model.addAttribute("posts", posts);
 	return "myProfile";
     }
 
