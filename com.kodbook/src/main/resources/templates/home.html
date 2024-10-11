@@ -21,13 +21,19 @@
             <!-- Display post photo (if available) -->
           <ul>
           	<li>
-          		<b>
-          			<span><img th:if="${post.user.photoBase64}" 
-	                 th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}" 
-	                 alt="Profile Photo"  />
-	                </span>
-          			<span th:text="${post.user.userName}"></span>
-          		</b>
+          		
+         			<form action="/viewProfile" method="post">
+         				<input type="hidden" name="userName" th:value="${post.user.userName}" />
+         				<button type="submit">
+	          			<span><img th:if="${post.user.photoBase64}" 
+		                 th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}" 
+		                 alt="Profile Photo"  />
+		                </span>
+	          			<span th:text="${post.user.userName}"></span>
+	          			</button>
+	          		</form>	
+		       
+          	
           		
 	            <img th:if="${post.photoBase64}" 
 	                 th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" 

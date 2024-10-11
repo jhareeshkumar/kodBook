@@ -75,6 +75,39 @@
         ul li a:hover {
             text-decoration: underline;
         }
+        
+		button {
+		    display: flex;
+		    align-items: center;
+		    border: none;
+		    background: none;
+		    padding: 0;
+		    cursor: pointer;
+		    font-size: 16px;
+		}
+		
+		button:hover {
+		    text-decoration: underline;
+		}
+		
+		button img {
+		    width: 32px !important;
+		    height: 32px !important;
+		    border-radius: 50%;
+		    margin-right: 8px;
+		    object-fit: cover;
+		}
+		
+		button span {
+		    font-weight: bold;
+		    color: #1877F2; /* Facebook blue color */
+		}
+		
+		form {
+		    margin: 10px 0;
+		}
+        
+        
         /* Responsive design */
         @media (max-width: 768px) {
             ul {

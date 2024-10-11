@@ -18,6 +18,7 @@ import com.kodbook.service.PostService;
 import com.kodbook.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
@@ -90,10 +91,26 @@ public class UserController {
     @GetMapping("/openMyProfile")
     public String openMyProfile(HttpSession session, Model model) {
 	String userName = (String) session.getAttribute("userName");
+
+	if (userName == null) {
+	    return "redirect:/index";
+	}
+	System.out.println(userName);
 	User user = userService.getUser(userName);
 	model.addAttribute("user", user);
 	List<Post> posts = user.getPosts();
 	model.addAttribute("posts", posts);
+	return "myProfile";
+    }
+
+    @PostMapping("/viewProfile")
+    public String viewProfile(@RequestParam String userName, HttpSession session, Model model) {
+	// TODO: process POST request
+	User user = userService.getUser(userName);
+	model.addAttribute("user", user);
+	List<Post> posts = user.getPosts();
+	model.addAttribute("posts", posts);
+
 	return "myProfile";
     }
 
