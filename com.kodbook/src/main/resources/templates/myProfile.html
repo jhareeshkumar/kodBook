@@ -1,95 +1,107 @@
 <!DOCTYPE html>
-	<html xmlns:th="http://www.thymeleaf.org">
-		<head>
-			<meta charset="ISO-8859-1">
-			<title>KodBook My Profile</title>
-			<link rel="stylesheet" th:href="@{/css/style.css}">
-		</head>
-	<body>
-		<!-- Navigation Bar -->
-		<nav>
-			<span th:text="${session.userName}"></span>
-			<a href="/home">Home</a>
-			<a href="/openCreatePost">Create Post</a>
-			<a href="/openMyProfile">My Profile</a>
-			<a href="/openEditProfile">Edit Profile</a>
-			<a href="/logout">Logout</a>
-		</nav>
-		
-		
-        <h2>Profile Details</h2>	
-        <ul>
-        	<li><img th:if="${user.photoBase64 != null}" 
-                 th:src="'data:image/jpeg;base64,' + ${user.photoBase64}" 
-                 alt="Profile Pic" /></li>
-        	<li th:text="${user.userName}"></li>
-        	<li th:text="${user.email}"></li>
-        	<li th:text="${user.dob}"></li>
-        	<li th:text="${user.gender}"></li>
-        	<li th:text="${user.city}"></li>
-        	<li th:text="${user.bio}"></li>
-        	<li th:text="${user.college}"></li>
-        	<li><a th:href="${user.linkedIn}" th:text="${user.linkedIn}"></a></li>
-        	<li><a th:href="${user.gitHub}" th:text="${user.gitHub}"></a></li>
-        </ul>
-        <br>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KodBook My Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
 
-        <!-- Loop through all posts -->
-        <div th:each="post : ${posts}">
-            <!-- Display post photo (if available) -->
-          <ul>
-          	<li>
-          		
-         			<form action="/viewProfile" method="post">
-         				<input type="hidden" name="userName" th:value="${post.user.userName}" />
-         				<button type="submit">
-	          			<span><img th:if="${post.user.photoBase64}" 
-		                 th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}" 
-		                 alt="Profile Photo"  />
-		                </span>
-	          			<span th:text="${post.user.userName}"></span>
-	          			</button>
-	          		</form>	
-		       
-          	
-          		
-	            <img th:if="${post.photoBase64}" 
-	                 th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" 
-	                 alt="Post Photo"  class="post-details"/>
-              </li>
-              <li>
-             		<p>
-            		<strong>Caption:</strong>
-            		<span th:text="${post.caption}"></span>
-            		</p>
-            	<li>
-             	<li>
-		            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
-		            <form action="/likePost" method="post">
-		            	<input type="hidden" name="id" th:value="${post.id}">
-		            	<input type="submit" value="LIKE POST"> 
-		            </form>
-            	</li>
-            	<li>
-		            <form action="/addComment" method="post">
-		            	<input type="hidden" name="id" th:value="${post.id}">
-		            	<textarea name="comment" placeholder="Add a Comment.."></textarea>
-		            	<input type="submit" value="COMMENT"> 
-		            </form>
-             	</li>
-             	<li>
-		            <div>
-		                <h3>Comments:</h3>
-		                <ul>
-		                    <li th:each="comment : ${post.comments}">
-		                        <span th:text="${comment}"></span>
-		                    </li>
-		                </ul>
-		            </div>
-             	</li>
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 p-4 flex justify-between items-center text-white">
+        <div>
+            <form action="/viewProfile" method="post" class="inline-flex items-center">
+                <input type="hidden" name="userName" th:value="${user.userName}" />
+                <button type="submit" class="flex items-center">
+                    <img th:if="${user.photoBase64}" 
+                         th:src="'data:image/jpeg;base64,' + ${user.photoBase64}" 
+                         alt="Profile Photo" class="w-8 h-8 rounded-full mr-2" />
+                    <span th:text="${user.userName}"></span>
+                </button>
+            </form>
+        </div>
+        <div class="flex space-x-4">
+            <a href="/home" class="hover:text-blue-300">Home</a>
+            <a href="/openCreatePost" class="hover:text-blue-300">Create Post</a>
+            <a href="/openMyProfile" class="hover:text-blue-300">My Profile</a>
+            <a href="/openEditProfile" class="hover:text-blue-300">Edit Profile</a>
+            <a href="/logout" class="hover:text-blue-300">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg max-w-lg">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">Profile Details</h2>
+        <ul class="space-y-3">
+            <li><img class="profile-pic w-32 h-32 rounded-full mx-auto" th:if="${user.photoBase64 != null}" th:src="'data:image/jpeg;base64,' + ${user.photoBase64}" alt="Profile Pic" /></li>
+            <li class="text-lg font-semibold text-center" th:text="${user.userName}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.email}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.dob}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.gender}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.city}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.bio}"></li>
+            <li class="text-gray-600 text-center" th:text="${user.college}"></li>
+            <li><a th:href="${user.linkedIn}" class="text-blue-500 hover:underline block text-center" th:text="${user.linkedIn}"></a></li>
+            <li><a th:href="${user.gitHub}" class="text-blue-500 hover:underline block text-center" th:text="${user.gitHub}"></a></li>
+        </ul>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg max-w-lg">
+        <div th:each="post : ${posts}" class="bg-white p-6 shadow-md rounded-lg mb-6">
+            <ul class="space-y-3">
+                <!-- Post Header with User Info -->
+                <li>
+                    <form action="/viewProfile" method="post" class="flex items-center">
+                        <input type="hidden" name="userName" th:value="${post.user.userName}" />
+                        <button type="submit" class="flex items-center">
+                            <img th:if="${post.user.photoBase64}" th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}" alt="Profile Photo" class="w-8 h-8 rounded-full mr-2" />
+                            <span th:text="${post.user.userName}" class="font-semibold"></span>
+                        </button>
+                    </form>
+                </li>
+                
+                <!-- Post Image -->
+                <li>
+                    <img th:if="${post.photoBase64}" th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" alt="Post Photo" class="w-full object-cover rounded-lg mt-3" />
+                </li>
+                
+                <!-- Post Content -->
+                <li class="mt-3">
+                    <p><strong>Caption:</strong> <span th:text="${post.caption}"></span></p>
+                </li>
+                
+                <!-- Post Likes and Actions -->
+                <li class="flex items-center space-x-4 mt-3">
+                    <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
+                    <form action="/likePost" method="post">
+                        <input type="hidden" name="id" th:value="${post.id}">
+                        <button type="submit" class="text-blue-600 font-semibold hover:text-blue-400">LIKE POST</button>
+                    </form>
+                </li>
+
+                <!-- Comments Section -->
+                <li>
+                    <form action="/addComment" method="post" class="mt-4">
+                        <input type="hidden" name="id" th:value="${post.id}">
+                        <textarea name="comment" placeholder="Add a Comment.." class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button type="submit" class="bg-blue-500 text-white py-1 px-4 rounded mt-2 hover:bg-blue-600">COMMENT</button>
+                    </form>
+                </li>
+
+                <!-- Display Comments -->
+                <li>
+                    <h3 class="font-semibold mt-4">Comments:</h3>
+                    <ul class="pl-4 list-disc">
+                        <li th:each="comment : ${post.comments}" class="text-gray-700 mt-1">
+                            <span th:text="${comment}"></span>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-            <br>
-            
-        	</div>
-	</body>
+        </div>
+    </div>
+    
+</body>
 </html>
