@@ -43,10 +43,10 @@ public class UserController {
     public String login(@RequestParam String userName, @RequestParam String password, Model model,
 	    HttpSession session) {
 	// TODO: process POST request
-	System.out.println("testing"+userName+password);
+	System.out.println("testing" + userName + password);
 	boolean loginStatus = userService.validateUser(userName, password);
 	if (loginStatus) {
-	    System.out.println("Login SuccessFull"+""+loginStatus);
+	    System.out.println("Login SuccessFull" + "" + loginStatus);
 
 	    session.setAttribute("userName", userName);
 	    model.addAttribute("session", session);
@@ -75,10 +75,12 @@ public class UserController {
     public String updateProfile(@ModelAttribute User user, @RequestParam MultipartFile photo, HttpSession session)
 	    throws IOException {
 	// TODO: process POST request
-
 	// fetch user from session & Update
 	String userName = (String) session.getAttribute("userName");
-
+	if (userName == null) {
+	    return "redirect:/";
+	}
+	
 	User dbUser = userService.getUser(userName);
 	dbUser.setDob(user.getDob());
 	dbUser.setCity(user.getCity());
@@ -101,6 +103,8 @@ public class UserController {
 	if (userName == null) {
 	    return "redirect:/";
 	}
+
+	
 	System.out.println(userName);
 	User user = userService.getUser(userName);
 	model.addAttribute("user", user);
