@@ -1,5 +1,7 @@
 package com.kodbook.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,4 +55,32 @@ public class UserServiceImplementation implements UserService {
 	// TODO Auto-generated method stub
 	userRepository.save(user);
     }
+
+    @Override
+    public boolean authenticateUser(String userNameOrEmail, String password) {
+	// TODO Auto-generated method stub
+	
+	Optional<User> optional = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
+	if (optional.isPresent() && optional.get().getPassword().equals(password)) {
+	    return true;
+	}
+	return false;
+    }
+
+    @Override
+    public User getUserByUsernameOrEmail(String usernameOrEmail) {
+	// TODO Auto-generated method stub
+	Optional<User> optional = userRepository.findByUserNameOrEmail(usernameOrEmail, usernameOrEmail);
+	if (optional.isEmpty()) {
+	    return null;
+	} else {
+	    User user = optional.get();
+	    return user;
+	}
+    }
+    
+    
+    
+    
+    
 }

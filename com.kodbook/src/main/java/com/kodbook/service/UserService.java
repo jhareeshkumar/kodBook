@@ -13,5 +13,8 @@ public interface UserService {
     User getUser(String userName);
 
     void updateUser(User user);
-
+    
+    boolean authenticateUser(String userNameOrEmail,String password);
+    
+   User getUserByUsernameOrEmail(String usernameOrEmail);
 }

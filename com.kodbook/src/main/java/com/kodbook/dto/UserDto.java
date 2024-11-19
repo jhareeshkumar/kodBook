@@ -3,7 +3,6 @@ package com.kodbook.dto;
 public class UserDto {
     private String userName;
     private String email;
-    private String password;
     private String dob;
     private String gender;
     private String city;
@@ -15,12 +14,11 @@ public class UserDto {
 	super();
 	// TODO Auto-generated constructor stub
     }
-    public UserDto(String userName, String email, String password, String dob, String gender, String city, String bio,
-	    String college, String linkedIn, String gitHub) {
+    public UserDto(String userName, String email, String dob, String gender, String city, String bio, String college,
+	    String linkedIn, String gitHub) {
 	super();
 	this.userName = userName;
 	this.email = email;
-	this.password = password;
 	this.dob = dob;
 	this.gender = gender;
 	this.city = city;
@@ -40,12 +38,6 @@ public class UserDto {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
     public String getDob() {
         return dob;
@@ -91,10 +83,8 @@ public class UserDto {
     }
     @Override
     public String toString() {
-	return "UserDto [userName=" + userName + ", email=" + email + ", password=" + password + ", dob=" + dob
-		+ ", gender=" + gender + ", city=" + city + ", bio=" + bio + ", college=" + college + ", linkedIn="
-		+ linkedIn + ", gitHub=" + gitHub + "]";
+	return "UserDto [userName=" + userName + ", email=" + email + ", dob=" + dob + ", gender=" + gender + ", city="
+		+ city + ", bio=" + bio + ", college=" + college + ", linkedIn=" + linkedIn + ", gitHub=" + gitHub
+		+ "]";
     }
-    
-    
 }
