@@ -13,12 +13,16 @@
 			<a href="/openCreatePost">Create Post</a>
 			<a href="/openMyProfile">My Profile</a>
 			<a href="/openEditProfile">Edit Profile</a>
-			<a href="/logout">Logout</a>
+			<form th:action="@{/logout}" method="post">
+    			<button class="hover:text-blue-300" type="submit">Logout</button>
+			</form>
 			
 		</nav>
 		<h1>#Update Profile Here!</h1>
 		
 		<form action="/updateProfile" method="post" enctype="multipart/form-data">
+			<!-- Automatically injects CSRF token -->
+        	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<label>PHOTO : </label>
 				<input type="file" name = photo accept="image/*">
 				<br>

@@ -3,6 +3,7 @@ package com.kodbook.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kodbook.entity.User;
@@ -10,6 +11,10 @@ import com.kodbook.repository.UserRepository;
 
 @Service
 public class UserServiceImplementation implements UserService {
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     @Autowired
     private UserRepository userRepository;
 
@@ -53,6 +58,8 @@ public class UserServiceImplementation implements UserService {
     @Override
     public void addUser(User user) {
 	// TODO Auto-generated method stub
+	String encodedPassword = passwordEncoder.encode(user.getPassword());
+	user.setPassword(encodedPassword);
 	userRepository.save(user);
     }
 

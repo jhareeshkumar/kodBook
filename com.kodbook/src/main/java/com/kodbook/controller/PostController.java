@@ -5,17 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kodbook.entity.Post;
 import com.kodbook.entity.User;
-import com.kodbook.repository.UserRepository;
 import com.kodbook.service.PostService;
 import com.kodbook.service.UserService;
 
@@ -30,25 +29,19 @@ public class PostController {
     private UserService userService;
     
     @GetMapping("/openCreatePost")
-    public String openCreatePost(HttpSession session) {
-	
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-	
+    public String openCreatePost() {
 	return "createPost";
     }
     
     @PostMapping("/createPost")
-    public String createPost(@RequestParam String caption, @RequestParam MultipartFile photo,HttpSession session) throws IOException {
+    public String createPost(@RequestParam String caption, @RequestParam MultipartFile photo,Authentication authentication) throws IOException {
 	// TODO: process POST request
 	Post post = new Post();
 	post.setCaption(caption);
 	post.setPhoto(photo.getBytes());
 	
-	String userName = (String) session.getAttribute("userName");
-	User user = userService.getUser(userName);
+	String username = authentication.getName();
+	User user = userService.getUser(username);
 	//mapping user to post
 	post.setUser(user);
 	postService.createPost(post);
@@ -64,13 +57,7 @@ public class PostController {
     }
 
     @GetMapping("/getAllPosts")
-    public String getAllPosts(Model model,HttpSession session) {
-	
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-	
+    public String getAllPosts(Model model) {
 	List<Post> posts = postService.getAllPosts();
 	model.addAttribute("posts", posts);
 	return "home";

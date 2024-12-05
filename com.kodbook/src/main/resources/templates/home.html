@@ -13,7 +13,10 @@
 			<a href="/openCreatePost">Create Post</a>
 			<a href="/openMyProfile">My Profile</a>
 			<a href="/openEditProfile">Edit Profile</a>
-			<a href="/logout">Logout</a>
+			<form th:action="@{/logout}" method="post">
+    			<button class="hover:text-blue-300" type="submit">Logout</button>
+			</form>
+
 		</nav>
 		<div>
         <!-- Loop through all posts -->
@@ -23,6 +26,9 @@
           	<li>
           		
          			<form action="/viewProfile" method="post">
+         				<!-- Automatically injects CSRF token -->
+        				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        					
          				<input type="hidden" name="userName" th:value="${post.user.userName}" />
          				<button type="submit">
 	          			<span><img th:if="${post.user.photoBase64}" 
@@ -48,12 +54,20 @@
              	<li>
 		            <p><strong>Likes:</strong> <span th:text="${post.likes}"></span></p>
 		            <form action="/likePost" method="post">
+		            	
+		            	<!-- Automatically injects CSRF token -->
+        				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		            	
 		            	<input type="hidden" name="id" th:value="${post.id}">
 		            	<input type="submit" value="LIKE POST"> 
 		            </form>
             	</li>
             	<li>
 		            <form action="/addComment" method="post">
+		            
+		            	<!-- Automatically injects CSRF token -->
+        				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        
 		            	<input type="hidden" name="id" th:value="${post.id}">
 		            	<textarea name="comment" placeholder="Add a Comment.."></textarea>
 		            	<input type="submit" value="COMMENT"> 

@@ -3,6 +3,7 @@ package com.kodbook.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,15 +26,12 @@ public class LikeController {
     private UserService userService;
 
     @PostMapping("/likePost")
-    public String likePost(@RequestParam Long id, HttpSession session, Model model) {
+    public String likePost(@RequestParam Long id, Authentication authentication, Model model) {
 	// TODO: process POST request
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-	boolean isLiked = likeService.toggleLike(id, userName);
+	String username = authentication.getName();
+	boolean isLiked = likeService.toggleLike(id, username);
 	model.addAttribute("isLiked", isLiked);
-	User user = userService.getUser(userName);
+	User user = userService.getUser(username);
 	model.addAttribute("user", user);
 	List<Post> posts = user.getPosts();
 	model.addAttribute("posts", posts);

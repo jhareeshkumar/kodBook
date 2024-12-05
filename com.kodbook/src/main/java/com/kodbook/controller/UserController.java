@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,6 @@ import com.kodbook.entity.Post;
 import com.kodbook.entity.User;
 import com.kodbook.service.PostService;
 import com.kodbook.service.UserService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -39,49 +38,44 @@ public class UserController {
 	return "index";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String userName, @RequestParam String password, Model model,
-	    HttpSession session) {
-	// TODO: process POST request
-	System.out.println("testing" + userName + password);
-	boolean loginStatus = userService.validateUser(userName, password);
-	if (loginStatus) {
-	    System.out.println("Login SuccessFull" + "" + loginStatus);
-
-	    session.setAttribute("userName", userName);
-	    model.addAttribute("session", session);
-
-	    List<Post> posts = postService.getAllPosts();
-	    model.addAttribute("posts", posts);
-	    return "home";
-	}
-	System.out.println("Invalid Credentials Please Login");
-	return "index";
-    }
+//    @PostMapping("/login")
+//    public String login(@RequestParam String username, @RequestParam String password, Model model,
+//	    HttpSession session) {
+//	// TODO: process POST request
+//	System.out.println("testing" + username + password);
+//	boolean loginStatus = userService.validateUser(username, password);
+//	if (loginStatus) {
+//	    System.out.println("Login SuccessFull" + "" + loginStatus);
+//
+//	    session.setAttribute("userName", username);
+//	    model.addAttribute("session", session);
+//
+//	    
+//	    // Set authentication in Spring Security context
+//	        UsernamePasswordAuthenticationToken auth = 
+//	            new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("USER")));
+//	        SecurityContextHolder.getContext().setAuthentication(auth);
+//	    
+//	    
+//	    List<Post> posts = postService.getAllPosts();
+//	    model.addAttribute("posts", posts);
+//	    return "home";
+//	}
+//	System.out.println("Invalid Credentials Please Login");
+//	return "index";
+//    }
 
     @GetMapping("/home")
-    public String getHome(Model model, HttpSession session) {
-
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-
+    public String getHome(Model model) {
 	model.addAttribute("posts", postService.getAllPosts());
 	return "home";
     }
 
     @PostMapping("/updateProfile")
-    public String updateProfile(@ModelAttribute User user, @RequestParam MultipartFile photo, HttpSession session)
+    public String updateProfile(@ModelAttribute User user, @RequestParam MultipartFile photo,Authentication authentication)
 	    throws IOException {
-	// TODO: process POST request
-	// fetch user from session & Update
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-	
-	User dbUser = userService.getUser(userName);
+	String username = authentication.getName();
+	User dbUser = userService.getUser(username);
 	dbUser.setDob(user.getDob());
 	dbUser.setCity(user.getCity());
 	dbUser.setBio(user.getBio());
@@ -97,16 +91,12 @@ public class UserController {
     }
 
     @GetMapping("/openMyProfile")
-    public String openMyProfile(HttpSession session, Model model) {
-	String userName = (String) session.getAttribute("userName");
-
-	if (userName == null) {
-	    return "redirect:/";
-	}
-
+    public String openMyProfile(Model model,Authentication authentication) {
 	
-	System.out.println(userName);
-	User user = userService.getUser(userName);
+	String username = authentication.getName();
+	
+	System.out.println(username);
+	User user = userService.getUser(username);
 	model.addAttribute("user", user);
 	List<Post> posts = user.getPosts();
 	model.addAttribute("posts", posts);
@@ -114,7 +104,7 @@ public class UserController {
     }
 
     @PostMapping("/viewProfile")
-    public String viewProfile(@RequestParam String userName, HttpSession session, Model model) {
+    public String viewProfile(@RequestParam String userName, Model model) {
 	// TODO: process POST request
 	User user = userService.getUser(userName);
 	model.addAttribute("user", user);
@@ -125,25 +115,20 @@ public class UserController {
     }
 
     @GetMapping("/openEditProfile")
-    public String openEditProfile(HttpSession session) {
-
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
+    public String openEditProfile() {
 	return "editProfile";
     }
 
-    @GetMapping(value = "/logout")
-    public String logout(HttpSession session) {
-	String userName = (String) session.getAttribute("userName");
-	if (userName == null) {
-	    return "redirect:/";
-	}
-	// TODO: process POST request
-	session.invalidate();
-	System.out.println("logout success");
-	return "redirect:/";
-    }
+//    @GetMapping(value = "/logout")
+//    public String logout(HttpSession session) {
+//	String userName = (String) session.getAttribute("userName");
+//	if (userName == null) {
+//	    return "redirect:/";
+//	}
+//	// TODO: process POST request
+//	session.invalidate();
+//	System.out.println("logout success");
+//	return "redirect:/";
+//    }
 
 }
