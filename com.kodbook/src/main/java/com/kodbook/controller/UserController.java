@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import com.kodbook.service.PostService;
 import com.kodbook.service.UserService;
 
 @Controller
+@RequestMapping("/web")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -26,6 +28,12 @@ public class UserController {
     @Autowired
     private PostService postService;
 
+    @GetMapping("/login")
+    public String login(Model model,String error) {
+	model.addAttribute("error",error!=null);
+	return "index";
+    }
+    
     @PostMapping("/signUp")
     public String signUp(@ModelAttribute User user) {
 	// TODO: process POST request

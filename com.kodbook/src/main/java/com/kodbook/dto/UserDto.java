@@ -1,9 +1,9 @@
 package com.kodbook.dto;
 
 public class UserDto {
-    private String userName;
+    private String username;
     private String email;
-    private String dob;
+    private String dateOfBirth;
     private String gender;
     private String city;
     private String bio;
@@ -14,12 +14,12 @@ public class UserDto {
 	super();
 	// TODO Auto-generated constructor stub
     }
-    public UserDto(String userName, String email, String dob, String gender, String city, String bio, String college,
+    public UserDto(String username, String email, String dateOfBirth, String gender, String city, String bio, String college,
 	    String linkedIn, String gitHub) {
 	super();
-	this.userName = userName;
+	this.username = username;
 	this.email = email;
-	this.dob = dob;
+	this.dateOfBirth = dateOfBirth;
 	this.gender = gender;
 	this.city = city;
 	this.bio = bio;
@@ -27,11 +27,11 @@ public class UserDto {
 	this.linkedIn = linkedIn;
 	this.gitHub = gitHub;
     }
-    public String getUserName() {
-        return userName;
+    public String getusername() {
+        return username;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setusername(String username) {
+        this.username = username;
     }
     public String getEmail() {
         return email;
@@ -39,11 +39,11 @@ public class UserDto {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getDob() {
-        return dob;
+    public String getdateOfBirth() {
+        return dateOfBirth;
     }
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setdateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
     public String getGender() {
         return gender;
@@ -83,7 +83,7 @@ public class UserDto {
     }
     @Override
     public String toString() {
-	return "UserDto [userName=" + userName + ", email=" + email + ", dob=" + dob + ", gender=" + gender + ", city="
+	return "UserDto [username=" + username + ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", city="
 		+ city + ", bio=" + bio + ", college=" + college + ", linkedIn=" + linkedIn + ", gitHub=" + gitHub
 		+ "]";
     }

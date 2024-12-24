@@ -3,18 +3,23 @@ package com.kodbook.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kodbook.dto.ChangePasswordRequest;
 import com.kodbook.entity.User;
+import com.kodbook.exception.IncorrectPasswordException;
+import com.kodbook.exception.SamePasswordException;
 import com.kodbook.repository.UserRepository;
 
 @Service
 public class UserServiceImplementation implements UserService {
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -63,14 +68,32 @@ public class UserServiceImplementation implements UserService {
 	userRepository.save(user);
     }
 
-    @Override
+//    @Override // when spring security not involved
+//    public boolean authenticateUser(String userNameOrEmail, String password) {
+//	// TODO Auto-generated method stub
+//	
+//	Optional<User> optional = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
+//	if (optional.isPresent() && optional.get().getPassword().equals(password)) {
+//	    return true;
+//	}
+//	return false;
+//    }
+    @Override // when spring secuirty is involved
     public boolean authenticateUser(String userNameOrEmail, String password) {
 	// TODO Auto-generated method stub
-	
+
 	Optional<User> optional = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
-	if (optional.isPresent() && optional.get().getPassword().equals(password)) {
-	    return true;
+
+	if (optional.isPresent()) {
+	    String dbEncodedPassword = optional.get().getPassword();
+	    boolean isPasswordMatches = passwordEncoder.matches(password, dbEncodedPassword);
+	    if (isPasswordMatches) {
+		System.out.println(
+			"Valid User" + "Password : " + dbEncodedPassword + "matches" + isPasswordMatches + "present");
+		return true;
+	    }
 	}
+	System.out.println("Invalid User");
 	return false;
     }
 
@@ -85,9 +108,22 @@ public class UserServiceImplementation implements UserService {
 	    return user;
 	}
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public void changePasssword(String username, ChangePasswordRequest request) {
+	// TODO Auto-generated method stub
+
+	User user = userRepository.findByUserName(username);
+
+	if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+	    throw new IncorrectPasswordException("Current Password is Incorrect");
+	}
+	
+	if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+	    throw new SamePasswordException("New Password cannot be the same as the Current Password.");
+	}
+	user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+	userRepository.save(user);
+    }
+
 }

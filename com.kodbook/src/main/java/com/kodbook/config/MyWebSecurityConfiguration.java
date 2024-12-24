@@ -2,6 +2,7 @@ package com.kodbook.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,34 +13,36 @@ import org.springframework.security.web.SecurityFilterChain;
 public class MyWebSecurityConfiguration {
 
     @Bean
+    @Order(value = 2)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
 	
 //	http.csrf(csrf->csrf.disable());
 	http.cors(cors->cors.disable());
-		
+	
+	http.securityMatcher("/web/**") ;// Match all requests except `/api/**`
 		
 	http.authorizeHttpRequests(auth->auth
-		.requestMatchers("/login","/openSignUp","/signUp","/css/**")
+		.requestMatchers("/web/login","/web/openSignUp","/web/signUp","/css/**")
 		.permitAll()
 		.anyRequest().hasRole("USER")
 		)
 		.formLogin(form->form
-			.loginPage("/login")
+			.loginPage("/web/login")
 //			.loginProcessingUrl("/login")
-			.defaultSuccessUrl("/home", true)
+			.defaultSuccessUrl("/web/home", true)
 			.permitAll()
 			)
 		.sessionManagement(session->session
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.sessionFixation(sessinonFixation->sessinonFixation.migrateSession())
-			.invalidSessionUrl("/login")
+			.invalidSessionUrl("/web/login")
 			.maximumSessions(1)
 			.maxSessionsPreventsLogin(true)
-			.expiredUrl("/login")
+			.expiredUrl("/web/login")
 			)
 		.logout(logout->logout
-			.logoutUrl("/logout")
-			.logoutSuccessUrl("/login")
+			.logoutUrl("/web/logout")
+			.logoutSuccessUrl("/web/login")
 			.invalidateHttpSession(true)
 			.clearAuthentication(true)
 			.deleteCookies("JSESSIONID")

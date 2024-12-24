@@ -21,6 +21,11 @@ public class SuccessResponse {
 	this.message = message;
 	this.data = data;
     }
+    
+    public SuccessResponse(String message) {
+	super();
+	this.message = message;
+    }
     public String getMessage() {
         return message;
     }

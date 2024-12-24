@@ -1,5 +1,6 @@
 package com.kodbook.service;
 
+import com.kodbook.dto.ChangePasswordRequest;
 import com.kodbook.entity.User;
 
 public interface UserService {
@@ -17,4 +18,6 @@ public interface UserService {
     boolean authenticateUser(String userNameOrEmail,String password);
     
    User getUserByUsernameOrEmail(String usernameOrEmail);
+
+   void changePasssword(String username, ChangePasswordRequest request);
 }
