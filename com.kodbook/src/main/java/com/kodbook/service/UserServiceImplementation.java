@@ -25,7 +25,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public boolean userExists(String userName, String email) {
-	// TODO Auto-generated method stub
 	User user1 = userRepository.findByUserName(userName);
 	User user2 = userRepository.findByEmail(email);
 	if (user1 != null || user2 != null) {
@@ -36,7 +35,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public boolean validateUser(String userName, String password) {
-	// TODO Auto-generated method stub
 	User user = userRepository.findByUserName(userName);
 //		String dbPass = null;
 //		if (user!=null) {
@@ -50,19 +48,16 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUser(String userName) {
-	// TODO Auto-generated method stub
 	return userRepository.findByUserName(userName);
     }
 
     @Override
     public void updateUser(User user) {
-	// TODO Auto-generated method stub
 	userRepository.save(user);
     }
 
     @Override
     public void addUser(User user) {
-	// TODO Auto-generated method stub
 	String encodedPassword = passwordEncoder.encode(user.getPassword());
 	user.setPassword(encodedPassword);
 	userRepository.save(user);
@@ -99,7 +94,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserByUsernameOrEmail(String usernameOrEmail) {
-	// TODO Auto-generated method stub
 	Optional<User> optional = userRepository.findByUserNameOrEmail(usernameOrEmail, usernameOrEmail);
 	if (optional.isEmpty()) {
 	    return null;
@@ -110,8 +104,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void changePasssword(String username, ChangePasswordRequest request) {
-	// TODO Auto-generated method stub
+    public void changePassword(String username, ChangePasswordRequest request) {
 
 	User user = userRepository.findByUserName(username);
 

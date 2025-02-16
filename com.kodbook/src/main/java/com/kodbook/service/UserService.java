@@ -19,5 +19,5 @@ public interface UserService {
     
    User getUserByUsernameOrEmail(String usernameOrEmail);
 
-   void changePasssword(String username, ChangePasswordRequest request);
+   void changePassword(String username, ChangePasswordRequest request);
 }
