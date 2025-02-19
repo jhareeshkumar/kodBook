@@ -32,12 +32,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 //@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*",allowCredentials = "true")
 @RestController(value = "restUserController")
 @RequestMapping("/api/v1/user")
-@Tag(name = "User Management",description = "APIs for User Management")
+@Tag(name = "User Management", description = "APIs for User Management")
 public class UserController {
 
     private final UserService userService;
-    
-    
+
     public UserController(UserService userService) {
 	this.userService = userService;
     }
@@ -77,16 +76,14 @@ public class UserController {
 		    HttpStatus.UNAUTHORIZED.getReasonPhrase()), HttpStatus.UNAUTHORIZED);
 	}
     }
-    
+
     @Operation(summary = "Get User Profile", description = "Get User Profile by username")
     @ApiResponses({
-	    @ApiResponse(responseCode = "200", description = "Successfully retrieved user profile",
-	                 content = @Content(mediaType = "application/json",
-	                 schema = @Schema(implementation = SuccessResponse.class))),
-	    @ApiResponse(responseCode = "404", description = "User not found")
-	})
+	    @ApiResponse(responseCode = "200", description = "Successfully retrieved user profile", content = @Content(mediaType = "application/json", schema = @Schema(implementation = SuccessResponse.class))),
+	    @ApiResponse(responseCode = "404", description = "User not found") })
     @GetMapping(value = "/profile/{username}")
-    public ResponseEntity<?> getProfile(@Parameter(description = "Username of the user", example = "john") @PathVariable String username) {
+    public ResponseEntity<?> getProfile(
+	    @Parameter(description = "Username of the user", example = "john") @PathVariable String username) {
 	User user = userService.getUserByUsernameOrEmail(username);
 	if (user == null) {
 	    return new ResponseEntity<>(new ErrorDto("user not found with" + username, HttpStatus.NOT_FOUND.value(),
@@ -99,13 +96,22 @@ public class UserController {
 	    return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
     }
-
+    
+    
+    @Deprecated(since = "1.0",forRemoval = true)
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserDetails userDetails,
+    @Operation(summary = "Change the user's password", description = "Allows an authenticated user to change their password.")
+
+    @ApiResponse(responseCode = "200", description = "Password changed successfully")
+    @ApiResponse(responseCode = "400", description = "Bad request, incorrect or same password")
+    @ApiResponse(responseCode = "401", description = "Unauthorized user")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
+    public ResponseEntity<SuccessResponse> changePassword(@AuthenticationPrincipal UserDetails userDetails,
 	    @RequestBody ChangePasswordRequest request) {
-	
+
 	userService.changePassword(userDetails.getUsername(), request);
-	
-	return new ResponseEntity<>(new SuccessResponse("Password Changed Successfully."), HttpStatus.OK);
+
+	return ResponseEntity.ok(new SuccessResponse("Password Changed Successfully."));
     }
+
 }
