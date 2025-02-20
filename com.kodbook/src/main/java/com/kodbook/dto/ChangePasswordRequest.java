@@ -5,7 +5,6 @@ public class ChangePasswordRequest {
     private String newPassword;
     public ChangePasswordRequest() {
 	super();
-	// TODO Auto-generated constructor stub
     }
     public ChangePasswordRequest(String currentPassword, String newPassword) {
 	super();

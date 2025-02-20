@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.kodbook.dto.ChangePasswordRequest;
 import com.kodbook.entity.User;
-import com.kodbook.exception.IncorrectPasswordException;
-import com.kodbook.exception.SamePasswordException;
+import com.kodbook.exception.custom.IncorrectPasswordException;
+import com.kodbook.exception.custom.SamePasswordException;
 import com.kodbook.repository.UserRepository;
 
 @Service
@@ -25,22 +25,25 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public boolean userExists(String userName, String email) {
-	User user1 = userRepository.findByUserName(userName);
-	User user2 = userRepository.findByEmail(email);
-	if (user1 != null || user2 != null) {
+	Optional<User> user1 = userRepository.findByUserName(userName);
+	Optional<User> user2 = userRepository.findByEmail(email);
+	if (user1.isPresent()) {
 	    return true;
-	}
-	return false;
+	} else if (user2.isPresent()) {
+	    return true;
+	} else
+	    return false;
     }
 
     @Override
     public boolean validateUser(String userName, String password) {
-	User user = userRepository.findByUserName(userName);
+	Optional<User> user = userRepository.findByUserName(userName);
 //		String dbPass = null;
 //		if (user!=null) {
 //		    dbPass = user.getPassword();
 //		}
-	if (user != null && password.equals(user.getPassword())) {
+	
+	if (user != null && password.equals(user.get().getPassword())) {
 	    return true;
 	}
 	return false;
@@ -48,7 +51,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUser(String userName) {
-	return userRepository.findByUserName(userName);
+	return userRepository.findByUserName(userName).orElseThrow();
     }
 
     @Override
@@ -65,7 +68,6 @@ public class UserServiceImplementation implements UserService {
 
 //    @Override // when spring security not involved
 //    public boolean authenticateUser(String userNameOrEmail, String password) {
-//	// TODO Auto-generated method stub
 //	
 //	Optional<User> optional = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
 //	if (optional.isPresent() && optional.get().getPassword().equals(password)) {
@@ -98,20 +100,23 @@ public class UserServiceImplementation implements UserService {
 	if (optional.isEmpty()) {
 	    return null;
 	} else {
-	    User user = optional.get();
-	    return user;
+	    
+	    return optional.get();
 	}
     }
 
     @Override
     public void changePassword(String username, ChangePasswordRequest request) {
 
-	User user = userRepository.findByUserName(username);
-
+	Optional<User> optional = userRepository.findByUserName(username);
+	if (optional.isEmpty()) {
+	    throw new UsernameNotFoundException("User Not Found");
+	}
+	User user = optional.get();
 	if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
 	    throw new IncorrectPasswordException("Current Password is Incorrect");
 	}
-	
+
 	if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
 	    throw new SamePasswordException("New Password cannot be the same as the Current Password.");
 	}
