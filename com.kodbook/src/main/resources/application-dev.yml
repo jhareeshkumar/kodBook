@@ -1,5 +1,13 @@
 #Dev profile configuration
 spring:
+  #Devtools configuration
+  devtools:
+    add-properties: true
+  #Bootstrap spring data jpa configuration
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: strict
   #Database configuration
   datasource:
     url: ${DB_URL}
@@ -17,3 +25,27 @@ spring:
 logging:
   level:
     root: info
+    web: debug
+    security: debug
+  file:
+    name: logs/dev.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+#Actuator configuration
+management:
+  server:
+    port: 8082
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    info:
+      env:
+        enabled: true
+    security:
+      enabled: true
+    endpoint:
+      health:
+        show-details: always
+      info:
+        enabled: true

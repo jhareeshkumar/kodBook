@@ -1,5 +1,12 @@
 #prod profile configuration
+server:
+  port: 8083
 spring:
+  #Bootstrap spring data jpa configuration
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: lazy
   #Database configuration
   datasource:
     url: ${DB_URL}
@@ -12,3 +19,31 @@ spring:
   # SendGrid configuration
   sendgrid:
     api-key: ${SENDGRID_API_KEY}
+#logging configuration
+logging:
+  level:
+    root: warn
+    web: warn
+    security: warn
+  file:
+    name: logs/prod.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+#Actuator configuration
+management:
+  server:
+    port: 8084
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics"  #Only expose safe endpoints
+    info:
+      env:
+        enabled: false
+    security:
+      enabled: true
+    endpoint:
+      health:
+        show-details: "when_authorized"
+      info:
+        enabled: true

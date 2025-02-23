@@ -1,5 +1,6 @@
 package com.kodbook.auth.v2.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ import jakarta.validation.Valid;
 public class AuthControllerV2 {
 
     private final AuthServiceV2 authService;
-
+    @Autowired
     public AuthControllerV2(AuthServiceV2 authService) {
 	this.authService = authService;
     }
