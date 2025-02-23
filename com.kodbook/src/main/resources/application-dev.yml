@@ -1,0 +1,19 @@
+#Dev profile configuration
+spring:
+  #Database configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  # SendGrid configuration
+  sendgrid:
+    api-key: ${SENDGRID_API_KEY}
+#logging configuration
+logging:
+  level:
+    root: info
