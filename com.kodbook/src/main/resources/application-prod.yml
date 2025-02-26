@@ -2,6 +2,11 @@
 server:
   port: 8083
 spring:
+  #Devtools configuration
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
   #Bootstrap spring data jpa configuration
   data:
     jpa:
@@ -13,6 +18,7 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: none
     show-sql: false
@@ -25,10 +31,11 @@ logging:
     root: warn
     web: warn
     security: warn
-  file:
-    name: logs/prod.log
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      file-name-pattern: var/log/${spring.application.name}.prod.%d{yyyy-MM-dd}.%i.gz
+      max-file-size: 10MB
+      max-history: 7
 #Actuator configuration
 management:
   server:
@@ -47,3 +54,9 @@ management:
         show-details: "when_authorized"
       info:
         enabled: true
+#springdoc - openApi(Swagger UI)
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

@@ -36,5 +36,5 @@ build/
 env/
 *.env
 #log files
-logs/
+/var/log
 *.log
