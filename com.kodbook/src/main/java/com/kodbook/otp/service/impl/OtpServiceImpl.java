@@ -1,17 +1,12 @@
 package com.kodbook.otp.service.impl;
 
+import com.kodbook.otp.service.OtpService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.stereotype.Service;
-
-import com.kodbook.email.service.EmailService;
-import com.kodbook.entity.User;
-import com.kodbook.otp.service.OtpService;
-import com.kodbook.user.v2.service.UserServiceV2;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -25,21 +20,21 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public String generateOtp() {
-	return String.format("%0" + OTP_LENGTH + "d", secureRandom.nextInt(OTP_MAX));
+        return String.format("%0" + OTP_LENGTH + "d", secureRandom.nextInt(OTP_MAX));
     }
 
     @Override
     public void storeOtp(String username, String otp) {
-	otpStorage.put(username, otp);
+        otpStorage.put(username, otp);
     }
 
     @Override
     public boolean validateOtp(String username, String otp) {
-	return otp.equals(otpStorage.get(username));
+        return otp.equals(otpStorage.get(username));
     }
 
     @Override
     public void clearOtp(String username) {
-	otpStorage.remove(username);
+        otpStorage.remove(username);
     }
 }
