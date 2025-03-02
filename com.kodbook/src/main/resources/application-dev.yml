@@ -1,0 +1,91 @@
+#Dev profile configuration
+spring:
+  #Devtools configuration
+  devtools:
+    add-properties: true
+  output:
+    ansi:
+      enabled: always
+  #Bootstrap spring data jpa configuration
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: lazy
+
+  #Database configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    hikari:
+      auto-commit: true
+      minimum-idle: 2
+      maximum-pool-size: 10
+    database-platform: org.hibernate.dialect.MySQLDialect
+  # SendGrid configuration
+  sendgrid:
+    api-key: ${SENDGRID_API_KEY}
+#logging configuration
+logging:
+  level:
+    root: info
+  #    web: debug
+  #    security: debug
+  #    com.zaxxer.hikari: DEBUG
+  #    org.hibernate: DEBUG
+  structured:
+    format:
+      #      console: ecs
+      file: ecs
+  file:
+    name: var/log/${spring.application.name}.log
+  #  pattern:
+  #    console: "%d{mm} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
+      max-file-size: 10MB
+      max-history: 7
+#Actuator configuration
+management:
+  server:
+    port: 8082
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    info:
+      env:
+        enabled: true
+    security:
+      enabled: true
+    endpoint:
+      health:
+        show-details: always
+      info:
+        enabled: true
+#springdoc - openApi(Swagger UI)
+springdoc:
+  swagger-ui:
+    filter: true
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+  show-actuator: true
+  writer-with-default-pretty-printer: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  cache:
+    disabled: true
+  api-docs:
+    security-schemes:
+      BasicAuth:
+        type: http
+        scheme: basic
+    security-requirements:
+      - BasicAuth: [ ]
