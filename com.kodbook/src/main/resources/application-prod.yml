@@ -1,0 +1,70 @@
+#prod profile configuration
+server:
+  port: 8083
+spring:
+  #Devtools configuration
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
+  #Bootstrap spring data jpa configuration
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: lazy
+  #Database configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  # SendGrid configuration
+  sendgrid:
+    api-key: ${SENDGRID_API_KEY}
+
+#logging configuration
+logging:
+  level:
+    root: warn
+    web: warn
+    security: warn
+  structured:
+    format:
+      file: ecs
+    file:
+      name: var/log/${spring.application.name}.json
+    logback:
+      rollingpolicy:
+        file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.json.gz
+        max-file-size: 10MB
+        max-history: 7
+
+#Actuator configuration
+management:
+  server:
+    port: 8084
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics"  #Only expose safe endpoints
+    info:
+      env:
+        enabled: false
+    security:
+      enabled: true
+    endpoint:
+      health:
+        show-details: "when_authorized"
+      info:
+        enabled: true
+
+#springdoc - openApi(Swagger UI)
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
