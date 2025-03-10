@@ -1,6 +1,5 @@
 package com.kodbook.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @Configuration
-@Slf4j
 public class RestApiSecurityConfig {
 
     @Value("${FRONTEND_URL}")
@@ -39,7 +37,7 @@ public class RestApiSecurityConfig {
     @Bean
     UrlBasedCorsConfigurationSource apiCorsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        log.info("FRONTEND_URL: {}", frontendUrl);
+
         configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
