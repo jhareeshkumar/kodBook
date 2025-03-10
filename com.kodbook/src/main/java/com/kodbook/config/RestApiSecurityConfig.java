@@ -1,5 +1,6 @@
 package com.kodbook.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,6 +14,9 @@ import java.util.Arrays;
 
 @Configuration
 public class RestApiSecurityConfig {
+
+    @Value("${FRONTEND_URL}")
+    private String frontendUrl;
 
     @Bean
     @Order(value = 1)
@@ -31,18 +35,14 @@ public class RestApiSecurityConfig {
     }
 
     @Bean
-    public UrlBasedCorsConfigurationSource apiCorsConfigurationSource() {
+    UrlBasedCorsConfigurationSource apiCorsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://kod-book.vercel.app"));
+
+        configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//	return new BCryptPasswordEncoder();
-//    }
 }
