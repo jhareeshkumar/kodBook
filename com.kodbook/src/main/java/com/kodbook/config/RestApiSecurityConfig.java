@@ -26,7 +26,7 @@ public class RestApiSecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF for REST API
                 .cors(cors -> cors.configurationSource(apiCorsConfigurationSource()))  // Disable CORS for REST API
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/user/signup").permitAll()  // Allow unauthenticated access to login and signup
+                        .requestMatchers("/api/v1/user/signup,/api/v2/auth/login").permitAll()  // Allow unauthenticated access to login and signup
                         .anyRequest().authenticated()  // Require authentication for other requests
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
