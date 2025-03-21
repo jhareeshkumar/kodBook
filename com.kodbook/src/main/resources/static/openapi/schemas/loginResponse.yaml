@@ -1,0 +1,10 @@
+LoginResponse:
+  type: object
+  properties:
+    token:
+      type: string
+    message:
+      type: string
+  required:
+    - token
+    - message

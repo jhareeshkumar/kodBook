@@ -72,20 +72,18 @@ management:
 #springdoc - openApi(Swagger UI)
 springdoc:
   swagger-ui:
-    filter: true
+    enabled: true
+    path: /swagger-ui
+    urls:
+      - url: /v3/api-docs
+        name: OpenAPI V3
+      - url: /openapi/openapi.yaml
+        name: OpenAPI yaml
+    urlsPrimaryName: OpenAPI yaml
     operationsSorter: method
     tagsSorter: alpha
     tryItOutEnabled: true
-  show-actuator: true
+  #  show-actuator: true
   writer-with-default-pretty-printer: true
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
-  cache:
-    disabled: true
-  api-docs:
-    security-schemes:
-      BasicAuth:
-        type: http
-        scheme: basic
-    security-requirements:
-      - BasicAuth: [ ]

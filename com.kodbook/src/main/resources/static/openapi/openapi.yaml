@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: KodBook API
+  description: |-
+    this is description
+  termsOfService: http://kodbook.io/terms/
+  contact:
+    email: api@kodbook.io
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+    description: Dev
+  - url: https://kodbook.io
+    description: Prod
+tags:
+  - name: auth
+    description: Operations about user authentication
+paths:
+  /api/v2/auth/login:
+    $ref: './paths/auth.yaml#/login'

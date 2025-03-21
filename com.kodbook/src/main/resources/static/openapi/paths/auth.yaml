@@ -1,0 +1,36 @@
+login:
+  post:
+    tags:
+      - auth
+    summary: Login user and return jwt token
+    description: Returns a jwt token when successful.
+    operationId: login
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/LoginDTO.yaml#/LoginDTO'
+            examples:
+              login:
+                value:
+                  username: "john"
+                  password: "john@123"
+    responses:
+      '200':
+        description: successful operation
+        content:
+          application/json:
+            examples:
+              LoginResponseExample:
+                value: |-
+                  {
+                    "token": "token",
+                    "message": "Login Successful"
+                  }
+            schema:
+              $ref: '../schemas/LoginResponse.yaml#/LoginResponse'
+      default:
+        description: Default error sample response
+        content:
+          application/json:
+            examples:
