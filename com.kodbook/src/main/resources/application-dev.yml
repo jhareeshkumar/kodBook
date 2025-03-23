@@ -89,3 +89,15 @@ springdoc:
         scheme: basic
     security-requirements:
       - BasicAuth: [ ]
+      
+#Thhymeleaf configuration to avoid coockies
+server:
+  servlet:
+    session:
+      cookie:
+        name: ""
+        http-only: true
+        secure: true
+        same-site: strict
+      
+      

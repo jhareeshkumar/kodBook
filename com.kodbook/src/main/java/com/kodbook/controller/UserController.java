@@ -34,7 +34,12 @@ public class UserController {
 	return "index";
     }
     
-    @PostMapping("/signUp")
+    @GetMapping("/openSignUp")
+    public String openSignUp() {
+        return "signUp";
+    }
+    
+    @PostMapping("/sign-up")
     public String signUp(@ModelAttribute User user) {
 	// TODO: process POST request
 	boolean signUpStatus = userService.userExists(user.getUserName(), user.getEmail());
@@ -138,5 +143,5 @@ public class UserController {
 //	System.out.println("logout success");
 //	return "redirect:/";
 //    }
-
+    
 }
