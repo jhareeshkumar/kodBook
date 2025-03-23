@@ -40,15 +40,18 @@ public class UserController {
     }
     
     @PostMapping("/sign-up")
-    public String signUp(@ModelAttribute User user) {
+    public String signUp(@ModelAttribute User user,Model model) {
 	// TODO: process POST request
 	boolean signUpStatus = userService.userExists(user.getUserName(), user.getEmail());
 	if (signUpStatus == false) {
 	    userService.addUser(user);
 	    System.out.println("User Added Successfully");
+	    model.addAttribute("success", "signUp SuccessFull. Please Login.");
+	    return "index";
 	}
-	System.out.println("User already Exists with same details");
-	return "index";
+	model.addAttribute("error", "User already Exists with same details. Please try to login.");
+	System.out.println("User already Exists with same details.");
+	return "signUp";
     }
 
 //    @PostMapping("/login")

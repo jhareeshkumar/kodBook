@@ -39,6 +39,9 @@
 	      <div th:if="${error}">
 	        <p style="color: red;">Invalid username or password</p>
 	    </div>
+	    <div th:if="${success}">
+	        <p style="color: green;" th:text="${success}"></p>
+	    </div>
 	    <!-- Automatically injects CSRF token -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div>
