@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/likes")
+@RequestMapping(value = "/web/likes")
 public class LikeController {
     @Autowired
     private LikeService likeService;

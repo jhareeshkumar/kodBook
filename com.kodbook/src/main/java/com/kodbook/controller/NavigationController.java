@@ -12,9 +12,4 @@ public class NavigationController {
         model.addAttribute("error", error != null);
         return "redirect:/web/login";
     }
-
-    @GetMapping("/openSignUp")
-    public String openSignUp() {
-        return "signUp";
-    }
 }

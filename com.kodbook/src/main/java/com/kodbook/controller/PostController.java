@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/web")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -50,7 +52,7 @@ public class PostController {
         posts.add(post);//add post to list
         user.setPosts(posts);//set posts to user
         userService.updateUser(user);//update
-        return "redirect:/home";
+        return "redirect:/web/openMyProfile";
     }
 
     @GetMapping("/getAllPosts")
@@ -67,15 +69,22 @@ public class PostController {
         postService.incrementLike(id);
         postService.updatePost(post);
         model.addAttribute("posts", postService.getAllPosts());
-        return "redirect:/home";
+        return "redirect:/web/home";
     }
 
-    @PostMapping("/addComment")
+    @PostMapping("/post/addComment")
     public String addComment(@RequestParam Long id, String comment, Model model) {
         // TODO: process POST request
         postService.addComment(id, comment);
         model.addAttribute("posts", postService.getAllPosts());
-        return "redirect:/home";
+        return "redirect:/web/openMyProfile";
+    }
+    @PostMapping("/home/addComment")
+    public String homeAddComment(@RequestParam Long id, String comment, Model model) {
+        // TODO: process POST request
+        postService.addComment(id, comment);
+        model.addAttribute("posts", postService.getAllPosts());
+        return "redirect:/web/home";
     }
 
 }

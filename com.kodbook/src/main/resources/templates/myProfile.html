@@ -14,8 +14,9 @@
 	<nav
 		class="bg-blue-600 p-4 flex justify-between items-center text-white">
 		<div>
-			<form action="/viewProfile" method="post"
+			<form action="/web/viewProfile" method="post"
 				class="inline-flex items-center">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 				<input type="hidden" name="userName" th:value="${user.userName}" />
 				<button type="submit" class="flex items-center">
 					<img th:if="${user.photoBase64}"
@@ -26,12 +27,12 @@
 			</form>
 		</div>
 		<div class="flex space-x-4">
-			<a href="/home" class="hover:text-blue-300">Home</a> <a
-				href="/openCreatePost" class="hover:text-blue-300">Create Post</a> <a
-				href="/openMyProfile" class="hover:text-blue-300">My Profile</a> <a
-				href="/openEditProfile" class="hover:text-blue-300">Edit Profile</a>
+			<a href="/web/home" class="hover:text-blue-300">Home</a> <a
+				href="/web/openCreatePost" class="hover:text-blue-300">Create Post</a> <a
+				href="/web/openMyProfile" class="hover:text-blue-300">My Profile</a> <a
+				href="/web/openEditProfile" class="hover:text-blue-300">Edit Profile</a>
 
-			<form th:action="@{/logout}" method="post">
+			<form th:action="@{/web/logout}" method="post">
     			<button class="hover:text-blue-300" type="submit">Logout</button>
 			</form>
 		</div>
@@ -71,7 +72,7 @@
 			<ul class="space-y-3">
 				<!-- Post Header with User Info -->
 				<li>
-					<form action="/viewProfile" method="post" class="flex items-center">
+					<form action="/web/viewProfile" method="post" class="flex items-center">
 					<!-- Automatically injects CSRF token -->
         			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
 						<input type="hidden" name="userName"
@@ -103,7 +104,7 @@
 					<p>
 						<strong>Likes:</strong> <span th:text="${post.likes}"></span>
 					</p>
-					<form action="/api/likes/likePost" method="post">
+					<form action="/web/likes/likePost" method="post">
 						<!-- Automatically injects CSRF token -->
         				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<input type="hidden" name="id" th:value="${post.id}">
@@ -119,7 +120,7 @@
 
 				<!-- Comments Section -->
 				<li>
-					<form action="/addComment" method="post" class="mt-4">
+					<form action="/web/post/addComment" method="post" class="mt-4">
 					<!-- Automatically injects CSRF token -->
         			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<input type="hidden" name="id" th:value="${post.id}">
