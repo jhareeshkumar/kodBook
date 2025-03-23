@@ -10,7 +10,7 @@
 		
 		<h1>Create your new account</h1>
 		
-		<form action="/signUp" method="post">
+		<form action="/web/sign-up" method="post">
 		<!-- Automatically injects CSRF token -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<label>USERNAME : </label>
