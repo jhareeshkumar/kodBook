@@ -11,6 +11,9 @@
 		<h1>Create your new account</h1>
 		
 		<form action="/web/sign-up" method="post">
+		<div th:if="${error}">
+	        <p style="color: red;" th:text="${error}"></p>
+	    </div>
 		<!-- Automatically injects CSRF token -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<label>USERNAME : </label>

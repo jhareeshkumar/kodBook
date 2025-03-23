@@ -23,7 +23,7 @@ public class MyWebSecurityConfiguration {
         http.securityMatcher("/web/**");// Match all requests except `/api/**`
 
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/web/login", "/web/openSignUp", "/web/signUp", "/css/**")
+                        .requestMatchers("/web/login", "/web/openSignUp", "/web/sign-up", "/css/**")
                         .permitAll()
                         .anyRequest().hasRole("USER")
                 )
