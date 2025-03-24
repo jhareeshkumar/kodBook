@@ -36,7 +36,7 @@ public class User {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "LONGBLOB")
+//    @Column(columnDefinition = "LONGBLOB")
     private byte[] profilePic;
 
     // method to convert byte[] to String
