@@ -103,7 +103,7 @@ public class UserController {
 
 	userService.updateUser(dbUser);
 
-	return "redirect:/home";
+	return "redirect:/web/home";
     }
 
     @GetMapping("/openMyProfile")
