@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "'like'")
+@Table(name = "likes")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,7 +27,6 @@ public class Like {
     private Post post;
     public Like() {
 	super();
-	// TODO Auto-generated constructor stub
     }
     public Like(UUID uuid, User user, Post post) {
 	super();

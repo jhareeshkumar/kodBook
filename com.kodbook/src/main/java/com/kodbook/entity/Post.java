@@ -5,7 +5,6 @@ import java.util.Base64;
 import java.util.List;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Post {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "LONGBLOB")
+//    @Column(columnDefinition = "LONGBLOB")
     private byte[] photo;
 
     // method to convert byte[] to String
@@ -41,7 +42,6 @@ public class Post {
 
     public Post() {
 	super();
-	// TODO Auto-generated constructor stub
     }
 
     public Post(Long id, String caption, int likes, List<String> comments, User user, byte[] photo) {
