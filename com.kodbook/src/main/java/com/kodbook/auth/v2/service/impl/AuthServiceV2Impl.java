@@ -1,8 +1,7 @@
 package com.kodbook.auth.v2.service.impl;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
+import com.kodbook.auth.v2.dto.AuthRequest;
+import com.kodbook.auth.v2.dto.AuthResponse;
 import com.kodbook.auth.v2.dto.ChangePasswordRequest;
 import com.kodbook.auth.v2.service.AuthServiceV2;
 import com.kodbook.email.service.EmailService;
@@ -11,8 +10,9 @@ import com.kodbook.exception.custom.IncorrectPasswordException;
 import com.kodbook.exception.custom.InvalidOtpException;
 import com.kodbook.otp.service.OtpService;
 import com.kodbook.user.v2.service.UserServiceV2;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -25,31 +25,37 @@ public class AuthServiceV2Impl implements AuthServiceV2 {
 
     @Override
     public void changePassword(String username, ChangePasswordRequest request) {
-	User user = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
 
-	if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
-	    throw new IncorrectPasswordException("Old password is incorrect");
-	}
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new IncorrectPasswordException("Old password is incorrect");
+        }
 
-	if (!otpService.validateOtp(username, request.getOtp())) {
-	    throw new InvalidOtpException("Invalid or expired OTP");
-	}
+        if (!otpService.validateOtp(username, request.getOtp())) {
+            throw new InvalidOtpException("Invalid or expired OTP");
+        }
 
-	user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-	userService.updateUser(user);
-	
-	otpService.clearOtp(username);
-    } 
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userService.updateUser(user);
+
+        otpService.clearOtp(username);
+    }
 
     @Override
     public void requestOtpForPasswordChange(String username) {
-	User user = userService.findByUsername(username);
-	String otp = otpService.generateOtp();
-	otpService.storeOtp(username, otp);
+        User user = userService.findByUsername(username);
+        String otp = otpService.generateOtp();
+        otpService.storeOtp(username, otp);
 
-	String subject = "OTP for password change";
-	String content = "Your OTP is: " + otp;
-	String to = user.getEmail();
-	emailService.sendEmail(to, subject, content);
+        String subject = "OTP for password change";
+        String content = "Your OTP is: " + otp;
+        String to = user.getEmail();
+        emailService.sendEmail(to, subject, content);
+    }
+
+    @Override
+    public AuthResponse authenticate(AuthRequest request) {
+        userService.findByUsername(request.getUsername());
+        return new AuthResponse("access-token", "refresh-token", "Bearer", 3600L, "Successfully logged in");
     }
 }
