@@ -11,31 +11,25 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
+    private final User user;
+
     @Autowired
-    private User user;
-
-
     public CustomUserDetails(User user) {
-        super();
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return user.getUserName();
     }
-
 }
