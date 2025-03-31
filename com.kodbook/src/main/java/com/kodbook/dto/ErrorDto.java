@@ -1,20 +1,20 @@
 package com.kodbook.dto;
 
 public class ErrorDto {
-    
+
     private String message;
-    private  Integer code;
+    private Integer code;
     private String reason;
-    
+
     public ErrorDto() {
-	// TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     public ErrorDto(String message, Integer code, String reason) {
-	super();
-	this.message = message;
-	this.code = code;
-	this.reason = reason;
+        super();
+        this.message = message;
+        this.code = code;
+        this.reason = reason;
     }
 
     public String getMessage() {
@@ -43,8 +43,8 @@ public class ErrorDto {
 
     @Override
     public String toString() {
-	return "ErrorDto [message=" + message + ", code=" + code + ", reason=" + reason + "]";
+        return "ErrorDto [message=" + message + ", code=" + code + ", reason=" + reason + "]";
     }
 
-    
+
 }
