@@ -34,13 +34,10 @@ spring:
 logging:
   level:
     root: info
-    #    web: debug
-    #    security: debug
-    #    com.zaxxer.hikari: DEBUG
-    #    org.hibernate: DEBUG
-    org:
-      springframework:
-        security: DEBUG
+  #    web: debug
+  #    security: debug
+  #    com.zaxxer.hikari: DEBUG
+  #    org.hibernate: DEBUG
   structured:
     format:
       #      console: ecs
@@ -92,7 +89,7 @@ springdoc:
         scheme: basic
     security-requirements:
       - BasicAuth: [ ]
-
+      
 #Thhymeleaf configuration to avoid coockies
 server:
   servlet:
