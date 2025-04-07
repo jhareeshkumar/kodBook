@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,50 +12,42 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
 
+    private static final String LOGIN_PAGE_URL = "/web/login";
+
     @Bean
     @Order(value = 2)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
-
-//	http.csrf(csrf->csrf.disable());
-        http.cors(cors -> cors.disable());
-
-        http.securityMatcher("/web/**");// Match all requests except `/api/**`
-
-        http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/web/login", "/web/openSignUp", "/web/sign-up", "/css/**")
+        return http
+                .securityMatcher("/web/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(LOGIN_PAGE_URL, "/web/openSignUp", "/web/sign-up", "/css/**")
                         .permitAll()
-                        .anyRequest().hasRole("USER")
+                        .requestMatchers("/web/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/web/**").hasRole("USER")
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                                .loginPage("/web/login")
-//			.loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/web/home", true)
-                                .permitAll()
+                .formLogin(formLogin -> formLogin
+                        .loginPage(LOGIN_PAGE_URL)
+                        .permitAll()
+                        .defaultSuccessUrl("/web/home", true)
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::migrateSession)
-                        .invalidSessionUrl("/web/login")
+                        .invalidSessionUrl(LOGIN_PAGE_URL)
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(true)
-                        .expiredUrl("/web/login")
+                        .expiredUrl(LOGIN_PAGE_URL + "?expired")
                 )
                 .logout(logout -> logout
                         .logoutUrl("/web/logout")
-                        .logoutSuccessUrl("/web/login")
+                        .logoutSuccessUrl(LOGIN_PAGE_URL + "?logout")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
-                );
-        return http.build();
+                )
+                .build();
     }
-
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//	return config.getAuthenticationManager();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

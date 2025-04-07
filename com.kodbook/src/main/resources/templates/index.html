@@ -1,71 +1,78 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KodBook - Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Ensures the footer is at the bottom when there isn't enough content */
-    body, html {
-      height: 100%;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2rem; /* Adds space below the header */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>KodBook - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ensures the footer is at the bottom when there isn't enough content */
+        body, html {
+          height: 100%;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+        }
+        main {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 2rem; /* Adds space below the header */
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-  <!-- Header -->
-  <nav class="bg-blue-600 py-4 shadow-lg">
+<!-- Header -->
+<nav class="bg-blue-600 py-4 shadow-lg">
     <div class="container mx-auto px-4 text-center">
-      <h1 class="text-3xl font-bold text-white">KodBook</h1>
+        <h1 class="text-3xl font-bold text-white">KodBook</h1>
     </div>
-  </nav>
+</nav>
 
-  <!-- Main Content -->
-  <main>
+<!-- Main Content -->
+<main>
     <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">Login to KodBook</h2>
-      <form action="/web/login" method="post" class="space-y-4">
-	      <div th:if="${error}">
-	        <p style="color: red;">Invalid username or password</p>
-	    </div>
-	    <div th:if="${success}">
-	        <p style="color: green;" th:text="${success}"></p>
-	    </div>
-	    <!-- Automatically injects CSRF token -->
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div>
-          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-          <input type="text" id="username" name="username" required="required" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input type="password" id="password" name="password" required="required" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div class="flex items-center justify-between mt-4">
-          <a href="/web/openForgotPassword" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
-          <a href="/web/openSignUp" class="text-sm text-blue-600 hover:underline">Create New Account</a>
-        </div>
-        <div class="mt-6">
-          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Login</button>
-        </div>
-	
-      </form>
-    </div>
-  </main>
+        <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">Login to KodBook</h2>
+        <form action="/web/login" class="space-y-4" method="post">
+            <div th:if="${error}">
+                <p style="color: red;">Invalid username or password</p>
+            </div>
+            <p th:if="${param.logout}">You have been logged out.</p>
+            <p th:if="${param.expired}">Your session has expired. Please log in again.</p>
+            <div th:if="${success}">
+                <p style="color: green;" th:text="${success}"></p>
+            </div>
+            <!-- Automatically injects CSRF token -->
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="username">Username</label>
+                <input class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       id="username" name="username" required="required"
+                       type="text">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700" for="password">Password</label>
+                <input class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       id="password" name="password" required="required"
+                       type="password">
+            </div>
+            <div class="flex items-center justify-between mt-4">
+                <a class="text-sm text-blue-600 hover:underline" href="/web/openForgotPassword">Forgot Password?</a>
+                <a class="text-sm text-blue-600 hover:underline" href="/web/openSignUp">Create New Account</a>
+            </div>
+            <div class="mt-6">
+                <button class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700" type="submit">Login
+                </button>
+            </div>
 
-  <!-- Footer -->
-  <div th:replace="~{footer}"></div>
+        </form>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{footer}"></div>
 
 </body>
 </html>
