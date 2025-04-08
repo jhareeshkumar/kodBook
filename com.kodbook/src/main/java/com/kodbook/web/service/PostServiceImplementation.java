@@ -31,12 +31,9 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Post> getAllPostByUser(User user) {
-        List<Post> posts = postRepository.findPostByUser(user);
-        for (Post post : posts) {
-            post.getPhoto();
-        }
-        return posts;
+        return postRepository.findPostByUser(user);
     }
 
     @Override
