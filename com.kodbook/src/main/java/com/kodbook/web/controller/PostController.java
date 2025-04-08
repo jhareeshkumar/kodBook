@@ -64,10 +64,7 @@ public class PostController {
 
     @PostMapping("/likePost")
     public String likePost(@RequestParam Long id, Model model) {
-        // TODO: process POST request
-        Post post = postService.getPost(id);
         postService.incrementLike(id);
-        postService.updatePost(post);
         model.addAttribute("posts", postService.getAllPosts());
         return "redirect:/web/home";
     }
