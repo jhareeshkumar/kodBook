@@ -32,7 +32,11 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public List<Post> getAllPostByUser(User user) {
-        return postRepository.findPostByUser(user);
+        List<Post> posts = postRepository.findPostByUser(user);
+        for (Post post : posts) {
+            post.getPhoto();
+        }
+        return posts;
     }
 
     @Override
