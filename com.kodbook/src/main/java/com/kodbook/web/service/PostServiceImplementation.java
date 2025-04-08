@@ -1,5 +1,6 @@
 package com.kodbook.web.service;
 
+import com.kodbook.user.entity.User;
 import com.kodbook.web.entity.Post;
 import com.kodbook.web.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class PostServiceImplementation implements PostService {
     public List<Post> getAllPosts() {
         // TODO Auto-generated method stub
         return postRepository.findAll();
+    }
+
+    @Override
+    public List<Post> getAllPostByUser(User user) {
+        return postRepository.findPostByUser(user);
     }
 
     @Override

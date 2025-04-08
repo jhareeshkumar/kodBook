@@ -1,5 +1,6 @@
 package com.kodbook.web.service;
 
+import com.kodbook.user.entity.User;
 import com.kodbook.web.entity.Post;
 
 import java.util.List;
@@ -9,6 +10,8 @@ public interface PostService {
     void createPost(Post post);
 
     List<Post> getAllPosts();
+
+    List<Post> getAllPostByUser(User user);
 
     Post getPost(Long id);
 

@@ -109,7 +109,7 @@ public class UserController {
         System.out.println(username);
         User user = userService.getUser(username);
         model.addAttribute("user", user);
-        List<Post> posts = user.getPosts();
+        List<Post> posts = postService.getAllPostByUser(user);
         model.addAttribute("posts", posts);
         return "myProfile";
     }
@@ -119,7 +119,7 @@ public class UserController {
         // TODO: process POST request
         User user = userService.getUser(userName);
         model.addAttribute("user", user);
-        List<Post> posts = user.getPosts();
+        List<Post> posts = postService.getAllPostByUser(user);
         model.addAttribute("posts", posts);
 
         return "myProfile";
