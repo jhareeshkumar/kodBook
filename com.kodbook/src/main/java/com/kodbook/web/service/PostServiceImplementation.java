@@ -36,11 +36,13 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional
     public void incrementLike(Long id) {
         Optional<Post> postOptional = postRepository.findById(id);
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
             post.setLikes(post.getLikes() + 1);
+            postRepository.save(post);
         }
     }
 
