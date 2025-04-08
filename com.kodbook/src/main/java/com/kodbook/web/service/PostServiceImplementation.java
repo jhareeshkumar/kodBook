@@ -17,8 +17,8 @@ public class PostServiceImplementation implements PostService {
     private PostRepository postRepository;
 
     @Override
+    @Transactional
     public void createPost(Post post) {
-        // TODO Auto-generated method stub
         postRepository.save(post);
         System.out.println("Post saved successfully");
     }
@@ -26,7 +26,6 @@ public class PostServiceImplementation implements PostService {
     @Override
     @Transactional(readOnly = true)
     public List<Post> getAllPosts() {
-        // TODO Auto-generated method stub
         return postRepository.findAll();
     }
 
@@ -38,7 +37,6 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public void incrementLike(Long id) {
-        // TODO Auto-generated method stub
         Optional<Post> postOptional = postRepository.findById(id);
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
@@ -47,20 +45,18 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post getPost(Long id) {
-        // TODO Auto-generated method stub
-        return postRepository.findById(id).get();
+    @Transactional(readOnly = true)
+    public Post getPost(Long postId) {
+        return postRepository.findById(postId).get();
     }
 
     @Override
     public void updatePost(Post post) {
-        // TODO Auto-generated method stub
         postRepository.save(post);
     }
 
     @Override
     public void addComment(Long id, String comment) {
-        // TODO Auto-generated method stub
         Optional<Post> optional = postRepository.findById(id);
         if (optional.isPresent()) {
             Post post = optional.get();
