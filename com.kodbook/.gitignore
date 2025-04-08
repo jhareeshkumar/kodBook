@@ -35,7 +35,7 @@ build/
 ###Environmental Variables ###
 env/
 *.env
-#log files
-/var
+###log files###
+/var/
 /var/log
 *.log
