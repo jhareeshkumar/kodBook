@@ -102,5 +102,5 @@ server:
         http-only: true
         secure: true
         same-site: strict
-      
-      
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}

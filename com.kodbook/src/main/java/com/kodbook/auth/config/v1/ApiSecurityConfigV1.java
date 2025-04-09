@@ -12,15 +12,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class ApiSecurityConfigV1 {
 
     private static final String API_PREFIX_V1 = "/api/v1";
     private static final String[] whitelistUrls = {API_PREFIX_V1 + "/user/signup", API_PREFIX_V1 + "/user/login"};
-    
-    @Value("${FRONTEND_URL}")
-    private String frontendUrl;
+
+    @Value("${cors.allowed-origins}")
+    private List<String> allowedOrigins;
 
     @Bean
     @Order(value = 1)
@@ -41,8 +42,7 @@ public class ApiSecurityConfigV1 {
     @Bean
     UrlBasedCorsConfigurationSource apiCorsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
