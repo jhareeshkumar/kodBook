@@ -1,6 +1,4 @@
 #prod profile configuration
-server:
-  port: 8083
 spring:
   #Devtools configuration
   devtools:
@@ -29,7 +27,7 @@ spring:
 #logging configuration
 logging:
   level:
-    root: warn
+    root: info
     web: warn
     security: warn
   structured:
@@ -45,8 +43,6 @@ logging:
 
 #Actuator configuration
 management:
-  server:
-    port: 8084
   endpoints:
     web:
       exposure:

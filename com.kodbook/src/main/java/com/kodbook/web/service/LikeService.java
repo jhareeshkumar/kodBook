@@ -6,6 +6,7 @@ import com.kodbook.web.entity.Post;
 import com.kodbook.web.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class LikeService {
     @Autowired
     private UserService userService;
 
+    @Transactional
     public boolean toggleLike(Long id, String userName) {
         // TODO Auto-generated method stub
         User user = userService.getUser(userName);
