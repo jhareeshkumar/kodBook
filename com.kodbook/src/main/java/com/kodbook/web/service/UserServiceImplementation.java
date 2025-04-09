@@ -77,6 +77,7 @@ public class UserServiceImplementation implements UserService {
 //	return false;
 //    }
     @Override // when spring secuirty is involved
+    @Transactional(readOnly = true)
     public boolean authenticateUser(String userNameOrEmail, String password) {
         // TODO Auto-generated method stub
 
