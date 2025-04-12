@@ -24,7 +24,7 @@ public class ApiSecurityConfigV1 {
     private List<String> allowedOrigins;
 
     @Bean
-    @Order(value = 1)
+    @Order(value = 3)
     public SecurityFilterChain restSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(API_PREFIX_V1 + "/**")

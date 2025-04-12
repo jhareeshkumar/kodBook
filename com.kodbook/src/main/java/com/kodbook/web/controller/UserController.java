@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model, String error) {
         model.addAttribute("error", error != null);
-        return "index";
+        return "my-login";
     }
 
     @GetMapping("/openSignUp")
