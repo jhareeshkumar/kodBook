@@ -3,9 +3,6 @@ spring:
   #Devtools configuration
   devtools:
     add-properties: true
-  output:
-    ansi:
-      enabled: always
   #Bootstrap spring data jpa configuration
   data:
     jpa:
@@ -30,17 +27,27 @@ spring:
   # SendGrid configuration
   sendgrid:
     api-key: ${SENDGRID_API_KEY}
+  boot:
+    admin:
+      ui:
+        enable-toasts: true
+      client:
+        url: ${SBA_SERVER_URL}
+        username: ${SBA_SERVER_USERNAME}
+        password: ${SBA_SERVER_PASSWORD}
+        instance:
+          metadata:
+            user.name: ${SBA_CLIENT_ACTUATOR_USERNAME}
+            user.password: ${SBA_CLIENT_ACTUATOR_PASSWORD}
+          service-base-url: ${SBA_CLIENT_BASE_URL}
+      context-path: /sba-server
 #logging configuration
 logging:
   level:
-    root: info
-    #    web: debug
-    #    security: debug
-    #    com.zaxxer.hikari: DEBUG
-    #    org.hibernate: DEBUG
+    root: warn
     org:
       springframework:
-        security: DEBUG
+        security: info
   structured:
     format:
       #      console: ecs
@@ -56,20 +63,26 @@ logging:
       max-history: 7
 #Actuator configuration
 management:
+  info:
+    os:
+      enabled: true
+    java:
+      enabled: true
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      mode: full
   endpoints:
     web:
       exposure:
         include: "*"
-    info:
-      env:
-        enabled: true
-    security:
-      enabled: true
-    endpoint:
-      health:
-        show-details: always
-      info:
-        enabled: true
+  endpoint:
+    health:
+      show-details: always
+    env:
+      show-values: always
 #springdoc - openApi(Swagger UI)
 springdoc:
   swagger-ui:
@@ -91,10 +104,11 @@ springdoc:
     security-requirements:
       - BasicAuth: [ ]
 
-#Thhymeleaf configuration to avoid coockies
+#Thhymeleaf configuration to avoid cookies
 server:
   servlet:
     session:
+      timeout: 30s
       cookie:
         name: ""
         http-only: true

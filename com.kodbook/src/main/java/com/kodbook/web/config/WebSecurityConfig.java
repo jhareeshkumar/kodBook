@@ -15,7 +15,7 @@ public class WebSecurityConfig {
     private static final String LOGIN_PAGE_URL = "/web/login";
 
     @Bean
-    @Order(value = 2)
+    @Order(value = 5)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher("/web/**")
@@ -28,8 +28,9 @@ public class WebSecurityConfig {
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage(LOGIN_PAGE_URL)
-                        .permitAll()
                         .defaultSuccessUrl("/web/home", true)
+                        .failureUrl(LOGIN_PAGE_URL + "?error")
+                        .permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
