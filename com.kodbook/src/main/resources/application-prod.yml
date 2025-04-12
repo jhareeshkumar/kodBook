@@ -30,6 +30,7 @@ spring:
       ui:
         enable-toasts: true
       client:
+        auto-registration: false
         url: ${SBA_SERVER_URL}
         username: ${SBA_SERVER_USERNAME}
         password: ${SBA_SERVER_PASSWORD}
