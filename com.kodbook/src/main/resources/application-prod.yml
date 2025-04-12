@@ -39,6 +39,8 @@ spring:
             user.name: ${SBA_CLIENT_ACTUATOR_USERNAME}
             user.password: ${SBA_CLIENT_ACTUATOR_PASSWORD}
           service-base-url: ${SBA_CLIENT_BASE_URL}
+server:
+  forward-headers-strategy: native
 #logging configuration
 logging:
   level:
