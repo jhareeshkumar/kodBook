@@ -17,7 +17,7 @@ public class SbaClientRegistration {
 
     private final ApplicationRegistrator applicationRegistrator;
 
-    @Scheduled(initialDelay = 2, fixedDelay = 2, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(initialDelay = 2, fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
     public void scheduleClientRegistration() {
         boolean registerStatus = applicationRegistrator.register();
         if (registerStatus) {
