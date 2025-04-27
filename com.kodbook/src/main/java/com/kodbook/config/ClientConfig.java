@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class ClientConfig {
     @Bean
-    @Order(value = 2)
+    @Order(value = 1)
     public SecurityFilterChain clientSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher("/actuator/**")

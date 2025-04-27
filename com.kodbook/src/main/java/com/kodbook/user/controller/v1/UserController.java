@@ -15,14 +15,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-//
-//@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*",allowCredentials = "true")
+@Slf4j
 @RestController(value = "restUserController")
 @RequestMapping("/api/v1/user")
 @Tag(name = "User Management", description = "APIs for User Management")
@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
-        System.out.println(signupRequest.toString());
+        log.info("Signup request received of : {}", signupRequest.getUsername());
 
         User user = new User();
         user.setUserName(signupRequest.getUsername());
@@ -48,23 +48,28 @@ public class UserController {
         user.setPassword(signupRequest.getPassword());
 
         if (userService.userExists(signupRequest.getUsername(), signupRequest.getEmail())) {
+            log.info("User already exists: {}", signupRequest.getUsername());
             return new ResponseEntity<>(new ErrorDto("User Already Exists!", HttpStatus.BAD_REQUEST.value(),
                     HttpStatus.BAD_REQUEST.getReasonPhrase()), HttpStatus.BAD_REQUEST);
         }
+
         userService.addUser(user);
+        log.info("User added successfully: {}", user.getUserName());
         return new ResponseEntity<>(new SuccessResponse("Signup Success", signupRequest), HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("login invoked" + loginRequest);
+        log.info("login request invoked of : {}", loginRequest.getUsername());
         boolean validateUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
         if (validateUser) {
             UserDto userDto = new UserDto();
             userDto.setusername(loginRequest.getUsername());
             SuccessResponse successResponse = new SuccessResponse("Login Success", userDto);
+            log.info("login request processed successfully of : {} ", loginRequest.getUsername());
             return new ResponseEntity<>(successResponse, HttpStatus.OK);
         } else {
+            log.error("Invalid Credentials of : {}", loginRequest.getUsername());
             return new ResponseEntity<>(new ErrorDto("Invalid Credentials", HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.getReasonPhrase()), HttpStatus.UNAUTHORIZED);
         }

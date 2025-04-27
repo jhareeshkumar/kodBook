@@ -14,7 +14,7 @@ public class ApiSecurityConfigV2 {
     private static final String[] whitelistUrls = {API_PREFIX_V2 + "/auth/login"};
 
     @Bean
-    @Order(value = 4)
+    @Order(value = 3)
     SecurityFilterChain apiSecurityFilterChainV2(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(API_PREFIX_V2 + "/**")
