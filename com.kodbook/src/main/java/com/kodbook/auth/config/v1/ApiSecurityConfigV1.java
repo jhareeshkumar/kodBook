@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,11 +25,11 @@ public class ApiSecurityConfigV1 {
     private List<String> allowedOrigins;
 
     @Bean
-    @Order(value = 3)
+    @Order(value = 2)
     public SecurityFilterChain restSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(API_PREFIX_V1 + "/**")
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(apiCorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(whitelistUrls).permitAll()
