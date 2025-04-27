@@ -15,7 +15,7 @@ public class WebSecurityConfig {
     private static final String LOGIN_PAGE_URL = "/web/login";
 
     @Bean
-    @Order(value = 5)
+    @Order(value = 4)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher("/web/**")

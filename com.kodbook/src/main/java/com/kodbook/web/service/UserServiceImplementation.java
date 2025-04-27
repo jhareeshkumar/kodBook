@@ -5,6 +5,7 @@ import com.kodbook.exception.custom.IncorrectPasswordException;
 import com.kodbook.exception.custom.SamePasswordException;
 import com.kodbook.user.entity.User;
 import com.kodbook.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserServiceImplementation implements UserService {
 
@@ -79,7 +81,6 @@ public class UserServiceImplementation implements UserService {
     @Override // when spring secuirty is involved
     @Transactional(readOnly = true)
     public boolean authenticateUser(String userNameOrEmail, String password) {
-        // TODO Auto-generated method stub
 
         Optional<User> optional = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
 
@@ -87,12 +88,11 @@ public class UserServiceImplementation implements UserService {
             String dbEncodedPassword = optional.get().getPassword();
             boolean isPasswordMatches = passwordEncoder.matches(password, dbEncodedPassword);
             if (isPasswordMatches) {
-                System.out.println(
-                        "Valid User" + "Password : " + dbEncodedPassword + "matches" + isPasswordMatches + "present");
+                log.info("Valid User: {}", userNameOrEmail);
                 return true;
             }
         }
-        System.out.println("Invalid User");
+        log.info("Invalid User: {}", userNameOrEmail);
         return false;
     }
 

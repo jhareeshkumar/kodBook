@@ -42,10 +42,10 @@ spring:
 #logging configuration
 logging:
   level:
-    root: info
-  #    org:
-  #      springframework:
-  #        security: info
+    root:
+    org:
+      springframework:
+        security: debug
   structured:
     format:
       #      console: ecs
@@ -106,9 +106,8 @@ springdoc:
 server:
   servlet:
     session:
-      timeout: 30s
+      timeout: 30m
       cookie:
-        name: ""
         http-only: true
         secure: true
         same-site: strict
