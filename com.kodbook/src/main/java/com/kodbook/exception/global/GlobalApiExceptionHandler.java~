@@ -57,7 +57,7 @@ public class GlobalApiExceptionHandler {
                     errorDetails.setMessage(fieldError.getDefaultMessage());
                 }
         );
-        validationErrorResponse.setErrors(errorDetails);
+        validationErrorResponse.setErrors();
         validationErrorResponse.setSuccess(false);
         validationErrorResponse.setMessage("Validation Error");
 
