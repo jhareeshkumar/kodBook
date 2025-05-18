@@ -30,7 +30,7 @@ public class ApiSecurityConfigV1 {
         return http
                 .securityMatcher(API_PREFIX_V1 + "/**")
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(apiV1CorsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(apiCorsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(whitelistUrls).permitAll()
                         .anyRequest().authenticated()
@@ -41,13 +41,13 @@ public class ApiSecurityConfigV1 {
     }
 
     @Bean
-    UrlBasedCorsConfigurationSource apiV1CorsConfigurationSource() {
+    UrlBasedCorsConfigurationSource apiCorsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/v1/**", configuration);
+        source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
 }

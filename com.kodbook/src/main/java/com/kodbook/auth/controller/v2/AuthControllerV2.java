@@ -41,7 +41,7 @@ public class AuthControllerV2 implements AuthApi {
         return ResponseEntity.ok(new SuccessResponse("OTP sent successfully to your registered email"));
     }
 
-    @PutMapping("/password")
+    @PutMapping("/password/change")
     @Operation(summary = "Update password", description = "Allows authenticated users to update their password after OTP verification")
     public ResponseEntity<SuccessResponse> updatePassword(@Valid @RequestBody ChangePasswordRequest request,
                                                           @AuthenticationPrincipal UserDetails userDetails) {
