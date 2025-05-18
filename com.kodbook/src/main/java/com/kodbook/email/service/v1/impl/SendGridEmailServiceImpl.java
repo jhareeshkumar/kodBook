@@ -37,7 +37,7 @@ public class SendGridEmailServiceImpl implements EmailService {
         try {
             request.setBody(mail.build());
             Response response = sendGrid.api(request);
-
+            log.info("Email sent successfully to {}", to);
             return response.getStatusCode() == 202;
 
         } catch (IOException e) {

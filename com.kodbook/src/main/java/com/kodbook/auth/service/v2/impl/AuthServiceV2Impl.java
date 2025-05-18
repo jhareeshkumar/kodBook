@@ -3,10 +3,11 @@ package com.kodbook.auth.service.v2.impl;
 import com.kodbook.auth.api.v2.dto.ChangePasswordRequest;
 import com.kodbook.auth.dto.AuthRequest;
 import com.kodbook.auth.dto.AuthResponse;
+import com.kodbook.auth.exception.EmailSendFailureException;
+import com.kodbook.auth.exception.IncorrectPasswordException;
+import com.kodbook.auth.exception.InvalidOtpException;
 import com.kodbook.auth.service.v2.AuthServiceV2;
 import com.kodbook.email.service.v1.EmailService;
-import com.kodbook.exception.custom.IncorrectPasswordException;
-import com.kodbook.exception.custom.InvalidOtpException;
 import com.kodbook.otp.service.v1.OtpService;
 import com.kodbook.user.entity.User;
 import com.kodbook.user.service.v2.UserServiceV2;
@@ -50,7 +51,10 @@ public class AuthServiceV2Impl implements AuthServiceV2 {
         String subject = "OTP for password change";
         String content = "Your OTP is: " + otp;
         String to = user.getEmail();
-        emailService.sendEmail(to, subject, content);
+        boolean isEmailSent = emailService.sendEmail(to, subject, content);
+        if (!isEmailSent) {
+            throw new EmailSendFailureException("Failed to send email");
+        }
     }
 
     @Override

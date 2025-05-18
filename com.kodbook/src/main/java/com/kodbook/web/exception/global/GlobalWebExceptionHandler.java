@@ -1,8 +1,8 @@
 package com.kodbook.web.exception.global;
 
+import com.kodbook.auth.exception.IncorrectPasswordException;
+import com.kodbook.auth.exception.SamePasswordException;
 import com.kodbook.dto.ErrorDto;
-import com.kodbook.exception.custom.IncorrectPasswordException;
-import com.kodbook.exception.custom.SamePasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

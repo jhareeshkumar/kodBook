@@ -1,8 +1,8 @@
 package com.kodbook.web.service;
 
 import com.kodbook.auth.api.v1.dto.ChangePasswordRequest;
-import com.kodbook.exception.custom.IncorrectPasswordException;
-import com.kodbook.exception.custom.SamePasswordException;
+import com.kodbook.auth.exception.IncorrectPasswordException;
+import com.kodbook.auth.exception.SamePasswordException;
 import com.kodbook.user.entity.User;
 import com.kodbook.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
