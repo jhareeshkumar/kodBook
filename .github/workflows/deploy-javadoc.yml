@@ -8,7 +8,9 @@ on:
 jobs:
   deploy-javadoc:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: kodbook/com.kodbook
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v3
