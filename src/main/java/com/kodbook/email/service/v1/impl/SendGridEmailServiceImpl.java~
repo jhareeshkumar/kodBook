@@ -1,4 +1,0 @@
-package com.kodbook.email.service.v1.impl;
-
-public class SendGridEmailServiceImpl {
-}
