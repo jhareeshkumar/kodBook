@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KodBook My Profile</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+	rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+
+	<!-- Navigation Bar -->
+	<nav
+		class="bg-blue-600 p-4 flex justify-between items-center text-white">
+		<div>
+			<form action="/web/viewProfile" method="post"
+				class="inline-flex items-center">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				<input type="hidden" name="userName" th:value="${user.userName}" />
+				<button type="submit" class="flex items-center">
+					<img th:if="${user.photoBase64}"
+						th:src="'data:image/jpeg;base64,' + ${user.photoBase64}"
+						alt="Profile Photo" class="w-8 h-8 rounded-full mr-2" src="" /> <span
+						th:text="${user.userName}"></span>
+				</button>
+			</form>
+		</div>
+		<div class="flex space-x-4">
+			<a href="/web/home" class="hover:text-blue-300">Home</a> <a
+				href="/web/openCreatePost" class="hover:text-blue-300">Create Post</a> <a
+				href="/web/openMyProfile" class="hover:text-blue-300">My Profile</a> <a
+				href="/web/openEditProfile" class="hover:text-blue-300">Edit Profile</a>
+
+			<form th:action="@{/web/logout}" method="post">
+    			<button class="hover:text-blue-300" type="submit">Logout</button>
+			</form>
+		</div>
+	</nav>
+
+	<!-- Profile Section -->
+	<div
+		class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg max-w-lg">
+		<h2 class="text-2xl font-bold mb-4 text-gray-700">Profile Details</h2>
+		<ul class="space-y-3">
+			<li><img class="profile-pic w-32 h-32 rounded-full mx-auto"
+				th:if="${user.photoBase64 != null}"
+				th:src="'data:image/jpeg;base64,' + ${user.photoBase64}"
+				alt="Profile Pic" src="" /></li>
+			<li class="text-lg font-semibold text-center"
+				th:text="${user.userName}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.email}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.dob}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.gender}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.city}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.bio}"></li>
+			<li class="text-gray-600 text-center" th:text="${user.college}"></li>
+			<li><a th:href="${user.linkedIn}"
+				class="text-blue-500 hover:underline block text-center"
+				th:text="${user.linkedIn}"></a></li>
+			<li><a th:href="${user.gitHub}"
+				class="text-blue-500 hover:underline block text-center"
+				th:text="${user.gitHub}"></a></li>
+		</ul>
+	</div>
+
+	<!-- Posts Section -->
+	<div
+		class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg max-w-lg">
+		<div th:each="post : ${posts}"
+			class="bg-white p-6 shadow-md rounded-lg mb-6">
+			<ul class="space-y-3">
+				<!-- Post Header with User Info -->
+				<li>
+					<form action="/web/viewProfile" method="post" class="flex items-center">
+					<!-- Automatically injects CSRF token -->
+        			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
+						<input type="hidden" name="userName"
+							th:value="${post.user.userName}" />
+						<button type="submit" class="flex items-center">
+							<img th:if="${post.user.photoBase64}"
+								th:src="'data:image/jpeg;base64,' + ${post.user.photoBase64}"
+								alt="Profile Photo" class="w-8 h-8 rounded-full mr-2" src="" />
+							<span th:text="${post.user.userName}" class="font-semibold"></span>
+						</button>
+					</form>
+				</li>
+
+				<!-- Post Image -->
+				<li><img th:if="${post.photoBase64}"
+					th:src="'data:image/jpeg;base64,' + ${post.photoBase64}"
+					alt="Post Photo" class="w-full object-cover rounded-lg mt-3" src="" />
+				</li>
+
+				<!-- Post Content -->
+				<li class="mt-3">
+					<p>
+						<strong>Caption:</strong> <span th:text="${post.caption}"></span>
+					</p>
+				</li>
+
+				<!-- Post Likes and Actions -->
+				<li class="flex items-center space-x-4 mt-3">
+					<p>
+						<strong>Likes:</strong> <span th:text="${post.likes}"></span>
+					</p>
+					<form action="/web/likes/likePost" method="post">
+						<!-- Automatically injects CSRF token -->
+        				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+						<input type="hidden" name="id" th:value="${post.id}">
+						<button type="submit"
+							class="text-blue-600 font-semibold hover:text-blue-400"><svg class="w-6 h-6 text-gray-400 hover:text-red-500" fill="none"
+							viewBox="0 0 24 24" stroke="currentColor">
+    							<path stroke-linecap="round" stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+						</svg></button>
+					</form>
+				</li>
+
+				<!-- Comments Section -->
+				<li>
+					<form action="/web/post/addComment" method="post" class="mt-4">
+					<!-- Automatically injects CSRF token -->
+        			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+						<input type="hidden" name="id" th:value="${post.id}">
+						<textarea name="comment" placeholder="Add a Comment.."
+							class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+							cols="" rows=""></textarea>
+						<button type="submit"
+							class="bg-blue-500 text-white py-1 px-4 rounded mt-2 hover:bg-blue-600">COMMENT</button>
+					</form>
+				</li>
+
+				<!-- Display Comments -->
+				<li>
+					<h3 class="font-semibold mt-4">Comments:</h3>
+					<ul class="pl-4 list-disc">
+						<li th:each="comment : ${post.comments}"
+							class="text-gray-700 mt-1"><span th:text="${comment}"></span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	 <!-- Footer -->
+  <div th:replace="~{footer}"></div>
+</body>
+</html>

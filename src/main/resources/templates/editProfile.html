@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">		
+		<head>
+			<meta charset="ISO-8859-1">
+			<title>KodBook Edit Profile</title>
+			<link rel="stylesheet" th:href="@{/css/style.css}">
+		</head>
+	<body>
+		<!-- Navigation Bar -->
+		<nav>
+			<span th:text="${session.userName}"></span>
+			<a href="/web/home">Home</a>
+			<a href="/web/openCreatePost">Create Post</a>
+			<a href="/web/openMyProfile">My Profile</a>
+			<a href="/web/openEditProfile">Edit Profile</a>
+			<form th:action="@{/web/logout}" method="post">
+    			<button class="hover:text-blue-300" type="submit">Logout</button>
+			</form>
+			
+		</nav>
+		<h1>#Update Profile Here!</h1>
+		
+		<form action="/web/updateProfile" method="post" enctype="multipart/form-data">
+			<!-- Automatically injects CSRF token -->
+        	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<label>PHOTO : </label>
+				<input type="file" name = photo accept="image/*">
+				<br>
+			<label>DOB : </label>
+				<input type="date" name = "dob">
+				<br>
+			<label>GENDER : </label>
+				<input type="radio" name = "gender" value="M">
+				<label>Male</label>
+				<input type="radio" name = "gender" value="F">
+				<label>Female</label>
+				<input type="radio" name = "gender" value="O">
+				<label>Others</label>
+				<br>
+			<label>CITY : </label>
+				<input type="text" name = "city">
+				<br>
+			<label>BIO : </label>
+				<input type="text" name = "bio">
+				<br>
+			<label>COLLEGE : </label>
+				<input type="text" name = "college">
+				<br>
+			<label>LINKEDIN : </label>
+				<input type="text" name = "linkedIn">
+				<br>
+			<label>GITHUB : </label>
+				<input type="text" name = "gitHub">
+				<br>
+				<input type="submit" value="UPDATE PROFILE">
+				<br>
+		</form>
+		 <!-- Footer -->
+ 		 <div th:replace="~{footer}"></div>
+	</body>
+</html>

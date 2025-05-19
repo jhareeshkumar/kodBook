@@ -1,0 +1,115 @@
+#Dev profile configuration
+spring:
+  #Devtools configuration
+  devtools:
+    add-properties: true
+  #Bootstrap spring data jpa configuration
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: lazy
+
+  #Database configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    hikari:
+      auto-commit: true
+      minimum-idle: 2
+      maximum-pool-size: 10
+    database-platform: org.hibernate.dialect.MySQLDialect
+  # SendGrid configuration
+  sendgrid:
+    api-key: ${SENDGRID_API_KEY}
+  boot:
+    admin:
+      client:
+        auto-registration: true
+        url: ${SBA_SERVER_URL}
+        username: ${SBA_SERVER_USERNAME}
+        password: ${SBA_SERVER_PASSWORD}
+        instance:
+          metadata:
+            user.name: ${SBA_CLIENT_ACTUATOR_USERNAME}
+            user.password: ${SBA_CLIENT_ACTUATOR_PASSWORD}
+          service-base-url: ${SBA_CLIENT_BASE_URL}
+#logging configuration
+logging:
+  level:
+    root:
+    org:
+      springframework:
+        security: debug
+  structured:
+    format:
+      #      console: ecs
+      file: ecs
+  file:
+    name: var/log/${spring.application.name}.log
+  #  pattern:
+  #    console: "%d{mm} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
+      max-file-size: 10MB
+      max-history: 7
+#Actuator configuration
+management:
+  info:
+    os:
+      enabled: true
+    java:
+      enabled: true
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    env:
+      show-values: always
+#springdoc - openApi(Swagger UI)
+springdoc:
+  swagger-ui:
+    filter: true
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+  show-actuator: true
+  writer-with-default-pretty-printer: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  cache:
+    disabled: true
+  api-docs:
+    security-schemes:
+      BasicAuth:
+        type: http
+        scheme: basic
+    security-requirements:
+      - BasicAuth: [ ]
+
+#Thhymeleaf configuration to avoid cookies
+server:
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        secure: true
+        same-site: strict
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}
