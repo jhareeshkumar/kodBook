@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,4 +33,29 @@ public class SwaggerConfig {
                         )
                 );
     }
+
+    @Bean
+    public GroupedOpenApi authV2Api() {
+        return GroupedOpenApi.builder()
+                .group("auth-v2")
+                .pathsToMatch("/api/v2/auth/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi userV1Api() {
+        return GroupedOpenApi.builder()
+                .group("user-v1")
+                .pathsToMatch("/api/v1/user/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi userV2Api() {
+        return GroupedOpenApi.builder()
+                .group("user-v2")
+                .pathsToMatch("/api/v2/users/**")
+                .build();
+    }
+
 }
