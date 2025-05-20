@@ -20,9 +20,14 @@ com.kodbook.exception.custom
 com.kodbook.exception.global
 com.kodbook.otp.service.v1
 com.kodbook.otp.service.v1.impl
+com.kodbook.user.api
 com.kodbook.user.controller.v1
+com.kodbook.user.controller.v2
 com.kodbook.user.dto
 com.kodbook.user.entity
+com.kodbook.user.exception
+com.kodbook.user.exception.handler
+com.kodbook.user.mapper
 com.kodbook.user.repository
 com.kodbook.user.service.v2
 com.kodbook.user.service.v2.impl
