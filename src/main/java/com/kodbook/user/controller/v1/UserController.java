@@ -64,7 +64,7 @@ public class UserController {
         boolean validateUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
         if (validateUser) {
             UserDto userDto = new UserDto();
-            userDto.setusername(loginRequest.getUsername());
+            userDto.setUsername(loginRequest.getUsername());
             SuccessResponse successResponse = new SuccessResponse("Login Success", userDto);
             log.info("login request processed successfully of : {} ", loginRequest.getUsername());
             return new ResponseEntity<>(successResponse, HttpStatus.OK);
@@ -87,7 +87,7 @@ public class UserController {
             return new ResponseEntity<>(new ErrorDto("user not found with" + username, HttpStatus.NOT_FOUND.value(),
                     HttpStatus.NOT_FOUND.getReasonPhrase()), HttpStatus.NOT_FOUND);
         } else {
-            UserDto userDto = new UserDto(user.getUserName(), user.getEmail(), user.getDob(), user.getGender(),
+            UserDto userDto = new UserDto(user.getId(), user.getUserName(), user.getEmail(), user.getDob(), user.getGender(),
                     user.getCity(), user.getBio(), user.getCollege(), user.getLinkedIn(), user.getGitHub());
             SuccessResponse successResponse = new SuccessResponse("GET profile success", userDto);
 

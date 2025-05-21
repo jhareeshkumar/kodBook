@@ -8,9 +8,11 @@ import com.kodbook.user.mapper.UserMapper;
 import com.kodbook.user.repository.UserRepository;
 import com.kodbook.user.service.v2.UserServiceV2;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,8 +39,8 @@ public class UserServiceV2Impl implements UserServiceV2 {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
-        List<User> all = userRepository.findAll();
-        return userMapper.toUserDTOList(all);
+    public Page<UserDto> getUsers(int pageNumber, int pageSize, String sortDirection, String[] sortBy) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.fromString(sortDirection), sortBy);
+        return userRepository.findAll(pageable).map(userMapper::mapToDto);
     }
 }
