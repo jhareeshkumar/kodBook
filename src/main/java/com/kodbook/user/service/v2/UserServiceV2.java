@@ -2,8 +2,7 @@ package com.kodbook.user.service.v2;
 
 import com.kodbook.user.dto.UserDto;
 import com.kodbook.user.entity.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface UserServiceV2 {
     User findByUsername(String username);
@@ -12,5 +11,5 @@ public interface UserServiceV2 {
 
     UserDto getUserById(Long id);
 
-    List<UserDto> getAllUsers();
+    Page<UserDto> getUsers(int pageNumber, int pageSize, String sortDirection, String[] sortBy);
 }
