@@ -39,13 +39,13 @@ spring:
             user.name: ${SBA_CLIENT_ACTUATOR_USERNAME}
             user.password: ${SBA_CLIENT_ACTUATOR_PASSWORD}
           service-base-url: ${SBA_CLIENT_BASE_URL}
-#logging configuration
-logging:
-  level:
-    root:
-    org:
-      springframework:
-        security: debug
+  #logging configuration
+  #logging:
+  #  level:
+  #    root:
+  #    org:
+  #      springframework:
+  #        security: debug
   structured:
     format:
       #      console: ecs
@@ -87,7 +87,7 @@ springdoc:
     filter: true
     operationsSorter: method
     tagsSorter: alpha
-    tryItOutEnabled: true
+    tryItOutEnabled: false
   show-actuator: true
   writer-with-default-pretty-printer: true
   default-produces-media-type: application/json

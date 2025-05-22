@@ -1,5 +1,6 @@
 package com.kodbook.user.service.v2;
 
+import com.kodbook.user.dto.PaginationRequest;
 import com.kodbook.user.dto.UserDto;
 import com.kodbook.user.entity.User;
 import org.springframework.data.domain.Page;
@@ -11,5 +12,5 @@ public interface UserServiceV2 {
 
     UserDto getUserById(Long id);
 
-    Page<UserDto> getUsers(int pageNumber, int pageSize, String sortDirection, String[] sortBy);
+    Page<UserDto> getUsers(PaginationRequest paginationRequest);
 }
