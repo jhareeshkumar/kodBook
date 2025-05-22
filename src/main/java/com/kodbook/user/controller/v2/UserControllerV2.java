@@ -1,12 +1,14 @@
 package com.kodbook.user.controller.v2;
 
 import com.kodbook.user.api.UserApi;
+import com.kodbook.user.dto.PaginationRequest;
 import com.kodbook.user.dto.UserDto;
 import com.kodbook.user.service.v2.UserServiceV2;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,10 +24,7 @@ public class UserControllerV2 implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Page<UserDto>> getUsers(@RequestParam(defaultValue = "0", required = false) int pageNumber,
-                                                  @RequestParam(defaultValue = "10", required = false) int pageSize,
-                                                  @RequestParam(defaultValue = "ASC", required = false) String sortDirection,
-                                                  @RequestParam(defaultValue = "id", required = false) String[] sortBy) {
-        return ResponseEntity.ok(userService.getUsers(pageNumber, pageSize, sortDirection, sortBy));
+    public ResponseEntity<Page<UserDto>> getUsers(@ModelAttribute @Valid PaginationRequest paginationRequest) {
+        return ResponseEntity.ok(userService.getUsers(paginationRequest));
     }
 }
