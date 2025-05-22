@@ -55,4 +55,4 @@ Or, run the generated jar:
 
 ## Contact
 
-- Author: [Jhareesh Kumar](https://github.com/jhareeshkumar)
+- Author: [J Hareesh Kumar](https://github.com/jhareeshkumar)
