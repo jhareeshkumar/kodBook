@@ -21,6 +21,7 @@ com.kodbook.exception.global
 com.kodbook.otp.service.v1
 com.kodbook.otp.service.v1.impl
 com.kodbook.user.api
+com.kodbook.user.config
 com.kodbook.user.controller.v1
 com.kodbook.user.controller.v2
 com.kodbook.user.dto
