@@ -1,6 +1,7 @@
 package com.kodbook.user.service.v2.impl;
 
 import com.kodbook.exception.custom.UsernameNotFoundException;
+import com.kodbook.user.dto.PaginationRequest;
 import com.kodbook.user.dto.UserDto;
 import com.kodbook.user.entity.User;
 import com.kodbook.user.exception.UserIdNotFoundException;
@@ -39,8 +40,8 @@ public class UserServiceV2Impl implements UserServiceV2 {
     }
 
     @Override
-    public Page<UserDto> getUsers(int pageNumber, int pageSize, String sortDirection, String[] sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.Direction.fromString(sortDirection), sortBy);
+    public Page<UserDto> getUsers(PaginationRequest paginationRequest) {
+        Pageable pageable = PageRequest.of(paginationRequest.getPageNumber(), paginationRequest.getPageSize(), Sort.Direction.fromString(paginationRequest.getSortDirection()), paginationRequest.getSortBy());
         return userRepository.findAll(pageable).map(userMapper::mapToDto);
     }
 }
