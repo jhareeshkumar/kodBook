@@ -26,7 +26,7 @@ public class ApiSecurityConfigV1 {
 
     @Bean
     @Order(value = 2)
-    public SecurityFilterChain restSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiSecurityFilterChainV1(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(API_PREFIX_V1 + "/**")
                 .csrf(AbstractHttpConfigurer::disable)

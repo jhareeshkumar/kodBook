@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,7 +18,7 @@ import java.util.List;
 @Configuration
 public class ApiSecurityConfigV2 {
     private static final String API_PREFIX_V2 = "/api/v2";
-    private static final String[] whitelistUrls = {API_PREFIX_V2 + "/auth/login"};
+    private static final String[] whitelistUrls = {API_PREFIX_V2 + "/auth/login", API_PREFIX_V2 + "/auth/register"};
 
     @Value("${cors.allowed-origins}")
     private List<String> allowedOrigins;
@@ -27,7 +28,7 @@ public class ApiSecurityConfigV2 {
     SecurityFilterChain apiSecurityFilterChainV2(HttpSecurity http) throws Exception {
         return http
                 .securityMatcher(API_PREFIX_V2 + "/**")
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors
                         .configurationSource(apiV2CorsConfigurationSource())
                 )

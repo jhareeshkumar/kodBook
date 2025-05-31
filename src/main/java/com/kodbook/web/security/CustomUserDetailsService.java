@@ -1,4 +1,4 @@
-package com.kodbook.auth.security;
+package com.kodbook.web.security;
 
 import com.kodbook.user.entity.User;
 import com.kodbook.user.repository.UserRepository;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -19,17 +19,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
+    
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optional = userRepository.findByUserName(username);
-
-        if (optional.isEmpty()) {
-            throw new UsernameNotFoundException(username + "No User Exists");
+        Optional<User> userOptional = userRepository.findByUserName(username);
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
-
-        return new CustomUserDetails(optional.get());
-
+        return new CustomUserDetails(userOptional.get());
     }
 }

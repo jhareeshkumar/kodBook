@@ -1,4 +1,4 @@
-package com.kodbook.auth.security;
+package com.kodbook.web.security;
 
 import com.kodbook.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
+    
     private final User user;
 
     @Autowired

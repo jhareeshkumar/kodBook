@@ -4,18 +4,21 @@ import com.kodbook.user.entity.User;
 import com.kodbook.web.entity.Post;
 import com.kodbook.web.service.PostService;
 import com.kodbook.web.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/web")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
@@ -35,24 +38,22 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@ModelAttribute User user, Model model) {
-        // TODO: process POST request
+    public String signUp(@ModelAttribute User user, Model model, RedirectAttributes redirectAttributes) {
         boolean signUpStatus = userService.userExists(user.getUserName(), user.getEmail());
-        if (signUpStatus == false) {
+        if (!signUpStatus) {
             userService.addUser(user);
-            System.out.println("User Added Successfully");
-            model.addAttribute("success", "signUp SuccessFull. Please Login.");
+            log.info("User SignUp SuccessFull: {}", user.getUserName());
+            redirectAttributes.addFlashAttribute("success", "signUp SuccessFull. Please Login.");
             return "redirect:/web/login";
         }
         model.addAttribute("error", "User already Exists with same details. Please try to login.");
-        System.out.println("User already Exists with same details.");
+        log.info("User already Exists with same details.");
         return "signUp";
     }
 
 //    @PostMapping("/login")
 //    public String login(@RequestParam String username, @RequestParam String password, Model model,
 //	    HttpSession session) {
-//	// TODO: process POST request
 //	System.out.println("testing" + username + password);
 //	boolean loginStatus = userService.validateUser(username, password);
 //	if (loginStatus) {
@@ -142,4 +143,8 @@ public class UserController {
 //	return "redirect:/";
 //    }
 
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin-dashboard";
+    }
 }
