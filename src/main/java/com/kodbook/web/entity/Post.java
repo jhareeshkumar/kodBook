@@ -1,6 +1,6 @@
 package com.kodbook.web.entity;
 
-import com.kodbook.user.entity.User;
+import com.kodbook.userservice.entity.User;
 import jakarta.persistence.*;
 
 import java.util.Arrays;

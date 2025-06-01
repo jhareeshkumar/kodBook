@@ -1,29 +1,26 @@
 #Dev profile configuration
 spring:
-  #Devtools configuration
   devtools:
     add-properties: true
-  #Bootstrap spring data jpa configuration
   data:
     jpa:
       repositories:
         bootstrap-mode: lazy
-
-  #Database configuration
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-    show-sql: true
     hikari:
       auto-commit: true
       minimum-idle: 2
       maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: true
   # SendGrid configuration
   sendgrid:
     api-key: ${SENDGRID_API_KEY}
@@ -39,13 +36,13 @@ spring:
             user.name: ${SBA_CLIENT_ACTUATOR_USERNAME}
             user.password: ${SBA_CLIENT_ACTUATOR_PASSWORD}
           service-base-url: ${SBA_CLIENT_BASE_URL}
-  #logging configuration
-  #logging:
-  #  level:
-  #    root:
-  #    org:
-  #      springframework:
-  #        security: debug
+#logging configuration
+logging:
+  level:
+    root:
+    org:
+      springframework:
+        security: debug
   structured:
     format:
       #      console: ecs
@@ -84,6 +81,7 @@ management:
 #springdoc - openApi(Swagger UI)
 springdoc:
   swagger-ui:
+    path: /swagger-ui
     filter: true
     operationsSorter: method
     tagsSorter: alpha
@@ -95,12 +93,7 @@ springdoc:
   cache:
     disabled: true
   api-docs:
-    security-schemes:
-      BasicAuth:
-        type: http
-        scheme: basic
-    security-requirements:
-      - BasicAuth: [ ]
+    path: /v3/api-docs
 
 #Thhymeleaf configuration to avoid cookies
 server:
@@ -113,3 +106,10 @@ server:
         same-site: strict
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS}
+#services configuration
+services:
+  user-service:
+    base-url: ${USER_SERVICE_URL}
+    client:
+      username: ${USER_SERVICE_USERNAME}
+      password: ${USER_SERVICE_PASSWORD}
