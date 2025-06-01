@@ -1,6 +1,6 @@
 package com.kodbook.web.security;
 
-import com.kodbook.user.entity.User;
+import com.kodbook.userservice.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +11,7 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
-    
+
     private final User user;
 
     @Autowired

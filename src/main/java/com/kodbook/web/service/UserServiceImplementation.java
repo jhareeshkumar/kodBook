@@ -1,10 +1,10 @@
 package com.kodbook.web.service;
 
-import com.kodbook.auth.api.v1.dto.ChangePasswordRequest;
-import com.kodbook.auth.exception.IncorrectPasswordException;
-import com.kodbook.auth.exception.SamePasswordException;
-import com.kodbook.user.entity.User;
-import com.kodbook.user.repository.UserRepository;
+import com.kodbook.authservice.api.v1.dto.ChangePasswordRequest;
+import com.kodbook.authservice.exception.IncorrectPasswordException;
+import com.kodbook.authservice.exception.SamePasswordException;
+import com.kodbook.userservice.entity.User;
+import com.kodbook.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
