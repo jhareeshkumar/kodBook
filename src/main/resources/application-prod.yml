@@ -88,3 +88,11 @@ springdoc:
 
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
+#services configuration
+services:
+  user-service:
+    base-url: ${USER_SERVICE_URL}
+    client:
+      username: ${USER_SERVICE_USERNAME}
+      password: ${USER_SERVICE_PASSWORD}

@@ -1,6 +1,6 @@
 package com.kodbook.web.controller;
 
-import com.kodbook.user.entity.User;
+import com.kodbook.userservice.entity.User;
 import com.kodbook.web.entity.Post;
 import com.kodbook.web.service.PostService;
 import com.kodbook.web.service.UserService;

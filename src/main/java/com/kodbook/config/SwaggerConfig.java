@@ -15,8 +15,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info()
-                        .title("KodBook API")
+                .info(new Info().title("KodBook API")
                         .description("This is the API documentation for KodBook.")
                         .version("1.0.0")
                         .contact(new Contact()
@@ -35,27 +34,29 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi authV2Api() {
+    public GroupedOpenApi publicAuthApi() {
         return GroupedOpenApi.builder()
-                .group("auth-v2")
-                .pathsToMatch("/api/v2/auth/**")
+                .group("public-auth")
+                .displayName("Public Auth API's")
+                .pathsToMatch("/api/v2/auth/**", "/api/v3/auth/**")
                 .build();
     }
 
     @Bean
-    public GroupedOpenApi userV1Api() {
+    public GroupedOpenApi publicUserApi() {
         return GroupedOpenApi.builder()
-                .group("user-v1")
-                .pathsToMatch("/api/v1/user/**")
+                .group("public-user")
+                .displayName("Public User API's")
+                .pathsToMatch("/api/v1/user/**", "/api/v2/users/**")
                 .build();
     }
 
     @Bean
-    public GroupedOpenApi userV2Api() {
+    public GroupedOpenApi internalUserApi() {
         return GroupedOpenApi.builder()
-                .group("user-v2")
-                .pathsToMatch("/api/v2/users/**")
+                .group("internal-user")
+                .displayName("Internal User API's")
+                .pathsToMatch("/internal/api/v3/users/**")
                 .build();
     }
-
 }

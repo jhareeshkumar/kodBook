@@ -1,7 +1,7 @@
 package com.kodbook.web.service;
 
-import com.kodbook.auth.api.v1.dto.ChangePasswordRequest;
-import com.kodbook.user.entity.User;
+import com.kodbook.authservice.api.v1.dto.ChangePasswordRequest;
+import com.kodbook.userservice.entity.User;
 
 public interface UserService {
 

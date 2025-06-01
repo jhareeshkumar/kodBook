@@ -1,6 +1,6 @@
 package com.kodbook.web.service;
 
-import com.kodbook.user.entity.User;
+import com.kodbook.userservice.entity.User;
 import com.kodbook.web.entity.Post;
 import com.kodbook.web.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
