@@ -2,6 +2,7 @@ package com.kodbook.authservice.registration.service.impl;
 
 import com.kodbook.authservice.dto.AuthUserDto;
 import com.kodbook.authservice.entity.AuthUser;
+import com.kodbook.authservice.enums.Role;
 import com.kodbook.authservice.mapper.AuthUserMapper;
 import com.kodbook.authservice.registration.client.UserServiceClient;
 import com.kodbook.authservice.registration.dto.RegisterRequest;
@@ -40,6 +41,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
         AuthUser authUser = authUserMapper.toAuthUserEntity(registerRequest);
         authUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        authUser.setRole(Role.ROLE_USER);
         AuthUser savedAuthUser = authUserRepository.save(authUser);
 
         //call user service to create user profile
