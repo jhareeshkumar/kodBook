@@ -17,11 +17,11 @@ public class RegistrationController implements RegistrationApi {
     private final RegistrationService registrationService;
 
     @Override
-    public ResponseEntity<ApiResponse<AuthUserDto>> register(RegisterRequest request) {
+    public ResponseEntity<ApiResponse<AuthUserDto>> register(RegisterRequest registerRequest) {
         ApiResponse<AuthUserDto> authUserDtoApiResponse = new ApiResponse<>();
         authUserDtoApiResponse.setSuccess(true);
         authUserDtoApiResponse.setMessage("User registered successfully");
-        authUserDtoApiResponse.setData(registrationService.register(request));
+        authUserDtoApiResponse.setData(registrationService.register(registerRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(authUserDtoApiResponse);
     }
 }
