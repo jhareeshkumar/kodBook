@@ -36,8 +36,8 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicAuthApi() {
         return GroupedOpenApi.builder()
-                .group("public-auth")
-                .displayName("Public Auth API's")
+                .group("auth-public")
+                .displayName("Auth Service - Public APIs")
                 .pathsToMatch("/api/v2/auth/**", "/api/v3/auth/**")
                 .build();
     }
@@ -45,8 +45,8 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicUserApi() {
         return GroupedOpenApi.builder()
-                .group("public-user")
-                .displayName("Public User API's")
+                .group("user-public")
+                .displayName("User Service - Public APIs")
                 .pathsToMatch("/api/v1/user/**", "/api/v2/users/**")
                 .build();
     }
@@ -54,8 +54,8 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi internalUserApi() {
         return GroupedOpenApi.builder()
-                .group("internal-user")
-                .displayName("Internal User API's")
+                .group("user-internal")
+                .displayName("User Service - Internal APIs")
                 .pathsToMatch("/internal/api/v3/users/**")
                 .build();
     }

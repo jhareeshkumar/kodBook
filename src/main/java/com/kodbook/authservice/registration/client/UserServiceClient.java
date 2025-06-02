@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class UserServiceClient {
     private final RestTemplate restTemplate;
-    @Value("${services.user.base-url:http://localhost:8081}")
+    @Value("${services.user-service.base-url}")
     private String userServiceBaseUrl;
 
     public void createUserProfile(UserProfileRegisterDto userProfileRegisterDto) {
